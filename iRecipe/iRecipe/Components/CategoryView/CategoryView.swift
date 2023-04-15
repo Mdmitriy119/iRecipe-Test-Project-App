@@ -8,31 +8,46 @@
 import SwiftUI
 
 struct CategoryView: View {
-    private let category: Meal.Category
+    private let currentCategory: Meal.Category
+    @Binding private var selectedCategory: Meal.Category?
     
-    init(category: Meal.Category) {
-        self.category = category
+    init(currentCategory: Meal.Category, selectedCategory: Binding<Meal.Category?>) {
+        self.currentCategory = currentCategory
+        self._selectedCategory = selectedCategory
     }
     
     var body: some View {
-        HStack(spacing: 4) {
-            Text(category.name.rawValue)
-                .font(.title2)
-            
-            AsyncImage(url: URL(string: category.thumbnail)) { image in
-                image.resizable()
-                    .frame(width: 40, height: 40)
-                    .aspectRatio(1.6, contentMode: .fit)
-                    .clipShape(RoundedRectangle(cornerRadius: 18))
-            } placeholder: {
-                Color.lightGray
+        Button {
+            selectedCategory = currentCategory
+        } label: {
+            HStack(spacing: 4) {
+                Text(currentCategory.name.rawValue)
+                    .font(.title2)
+                    .foregroundColor(.black)
+                AsyncImage(url: URL(string: currentCategory.thumbnail)) { image in
+                    image.resizable()
+                        .frame(width: 40, height: 40)
+                        .aspectRatio(1.6, contentMode: .fit)
+                        .clipShape(RoundedRectangle(cornerRadius: 18))
+                } placeholder: {
+                    backgroundColor
+                }
             }
+            .padding()
+            .background(
+                backgroundColor
+                    .cornerRadius(16)
+            )
         }
-        .padding()
-        .background(
+    }
+    
+    @ViewBuilder
+    private var backgroundColor: some View {
+        if currentCategory == selectedCategory {
+            Color.teal
+        } else {
             Color.lightGray
-                .cornerRadius(16)
-        )
+        }
     }
 }
 
@@ -43,6 +58,6 @@ struct CategoryView_Previews: PreviewProvider {
             name: .beef,
             thumbnail: "https://www.themealdb.com/images/category/beef.png",
             description: "Beef is the culinary name for meat from cattle, particularly skeletal muscle. Humans have been eating beef since prehistoric times.[1] Beef is a source of high-quality protein and essential nutrients.[2]")
-        CategoryView(category: mockCategory)
+        CategoryView(currentCategory: mockCategory, selectedCategory: .constant(mockCategory))
     }
 }

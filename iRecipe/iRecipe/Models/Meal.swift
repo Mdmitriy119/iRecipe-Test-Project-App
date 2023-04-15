@@ -111,3 +111,9 @@ private extension Meal {
         case measure20 = "strMeasure20"
     }
 }
+
+extension Meal {
+    static var mockMeal: Meal {
+        Meal(id: "52772", name: "Teriyaki Chicken Casserole", category: .chicken, area: nil, instructions: nil, thumbnail: "https://www.themealdb.com/images/media/meals/wvpsxx1468256321.jpg", tags: nil, youtube: nil, ingredient1: nil, ingredient2: nil, ingredient3: nil, ingredient4: nil, ingredient5: nil, ingredient6: nil, ingredient7: nil, ingredient8: nil, ingredient9: nil, ingredient10: nil, ingredient11: nil, ingredient12: nil, ingredient13: nil, ingredient14: nil, ingredient15: nil, ingredient16: nil, ingredient17: nil, ingredient18: nil, ingredient19: nil, ingredient20: nil, measure1: nil, measure2: nil, measure3: nil, measure4: nil, measure5: nil, measure6: nil, measure7: nil, measure8: nil, measure9: nil, measure10: nil, measure11: nil, measure12: nil, measure13: nil, measure14: nil, measure15: nil, measure16: nil, measure17: nil, measure18: nil, measure19: nil, measure20: nil)
+    }
+}

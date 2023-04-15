@@ -14,7 +14,7 @@ struct ContentView: View {
         ZStack(alignment: .bottom){
             switch selectedTab {
                 case .home:
-                    Home()
+                    Home(viewModel: HomeViewModel())
                 case .randomRecipe:
                     RandomRecipe()
                 case .favoriteRecipes:
