@@ -8,20 +8,47 @@
 import SwiftUI
 
 struct MainView: View {
+    // MARK: - Private properties
+    @State private var selectedTab = 0
+    @ObservedObject private var homeViewModel: HomeViewModel
+    @ObservedObject private var randomRecipeViewModel: RandomRecipeViewModel
+    @ObservedObject private var favoriteRecipesViewModel: FavoriteRecipesViewModel
+    
+    init(homeViewModel: HomeViewModel,
+         randomRecipeViewModel: RandomRecipeViewModel,
+         favoriteRecipesViewModel: FavoriteRecipesViewModel) {
+        self.homeViewModel = homeViewModel
+        self.randomRecipeViewModel = randomRecipeViewModel
+        self.favoriteRecipesViewModel = favoriteRecipesViewModel
+    }
+    
+    
     var body: some View {
-        TabView {
-            Home(viewModel: HomeViewModel())
+        let tabViewSelectionBinding = Binding(
+            get: { self.selectedTab },
+            set: {
+                self.selectedTab = $0
+                if selectedTab == 1 {
+                    randomRecipeViewModel.connect()
+                }
+            })
+        
+        TabView(selection: tabViewSelectionBinding) {
+            Home(viewModel: homeViewModel)
                 .tabItem {
                     Label("Home", systemImage: "house")
                 }
-            RandomRecipe()
+                .tag(0)
+            RandomRecipe(viewModel: randomRecipeViewModel)
                 .tabItem {
                     Label("Random Recipe", systemImage: "arrow.triangle.2.circlepath.circle")
                 }
-            FavoriteRecipes(viewModel: FavoriteRecipesViewModel())
+                .tag(1)
+            FavoriteRecipes(viewModel: favoriteRecipesViewModel)
                 .tabItem {
                     Label("Favorite Recipes", systemImage: "heart")
                 }
+                .tag(2)
         }
         .accentColor(.teal)
     }
@@ -29,6 +56,8 @@ struct MainView: View {
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView()
+        MainView(homeViewModel: HomeViewModel(),
+                 randomRecipeViewModel: RandomRecipeViewModel(),
+                 favoriteRecipesViewModel: FavoriteRecipesViewModel())
     }
 }

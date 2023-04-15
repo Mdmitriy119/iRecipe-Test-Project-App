@@ -29,6 +29,8 @@
 		7214301329EACECE00D6F849 /* UseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7214301229EACECE00D6F849 /* UseCase.swift */; };
 		7214301529EAD91600D6F849 /* String+CapitalizedFirst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7214301429EAD91600D6F849 /* String+CapitalizedFirst.swift */; };
 		728A695129EB18880035AEB9 /* GetFavoriteMealByIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728A695029EB18880035AEB9 /* GetFavoriteMealByIdUseCase.swift */; };
+		728A695429EB2F930035AEB9 /* RandomRecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728A695329EB2F930035AEB9 /* RandomRecipeViewModel.swift */; };
+		728A695629EB31690035AEB9 /* GetRandomMealUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728A695529EB31690035AEB9 /* GetRandomMealUseCase.swift */; };
 		72FBD05929EAE42C002C1DF1 /* MealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FBD05829EAE42C002C1DF1 /* MealView.swift */; };
 		72FBD05F29EAEDC0002C1DF1 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FBD05E29EAEDC0002C1DF1 /* CategoryView.swift */; };
 		72FBD06229EAF0FA002C1DF1 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FBD06129EAF0FA002C1DF1 /* SearchTextField.swift */; };
@@ -60,6 +62,8 @@
 		7214301229EACECE00D6F849 /* UseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCase.swift; sourceTree = "<group>"; };
 		7214301429EAD91600D6F849 /* String+CapitalizedFirst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+CapitalizedFirst.swift"; sourceTree = "<group>"; };
 		728A695029EB18880035AEB9 /* GetFavoriteMealByIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFavoriteMealByIdUseCase.swift; sourceTree = "<group>"; };
+		728A695329EB2F930035AEB9 /* RandomRecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomRecipeViewModel.swift; sourceTree = "<group>"; };
+		728A695529EB31690035AEB9 /* GetRandomMealUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRandomMealUseCase.swift; sourceTree = "<group>"; };
 		72FBD05829EAE42C002C1DF1 /* MealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealView.swift; sourceTree = "<group>"; };
 		72FBD05E29EAEDC0002C1DF1 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
 		72FBD06129EAF0FA002C1DF1 /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
@@ -134,6 +138,8 @@
 			isa = PBXGroup;
 			children = (
 				72142FD529EA984C00D6F849 /* RandomRecipe.swift */,
+				728A695329EB2F930035AEB9 /* RandomRecipeViewModel.swift */,
+				728A695229EB2F840035AEB9 /* UseCases */,
 			);
 			path = RandomRecipe;
 			sourceTree = "<group>";
@@ -227,6 +233,14 @@
 			isa = PBXGroup;
 			children = (
 				728A695029EB18880035AEB9 /* GetFavoriteMealByIdUseCase.swift */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		728A695229EB2F840035AEB9 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				728A695529EB31690035AEB9 /* GetRandomMealUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -361,6 +375,7 @@
 			files = (
 				72142FF929EAAE2600D6F849 /* Meal+Category.swift in Sources */,
 				72FBD06729EB0CF7002C1DF1 /* Storage.swift in Sources */,
+				728A695429EB2F930035AEB9 /* RandomRecipeViewModel.swift in Sources */,
 				7214300829EAB73500D6F849 /* LoadingState.swift in Sources */,
 				72FBD06A29EB13C8002C1DF1 /* FavoriteRecipesViewModel.swift in Sources */,
 				7214301029EACE6C00D6F849 /* GetMealsByCategoryUseCase.swift in Sources */,
@@ -382,6 +397,7 @@
 				7214300C29EACE4F00D6F849 /* GetMealsCategoriesUseCase.swift in Sources */,
 				72142FD629EA984C00D6F849 /* RandomRecipe.swift in Sources */,
 				72142FC229EA971100D6F849 /* iRecipeApp.swift in Sources */,
+				728A695629EB31690035AEB9 /* GetRandomMealUseCase.swift in Sources */,
 				7214301329EACECE00D6F849 /* UseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -7,7 +7,7 @@
 
 import Foundation
 
-@MainActor protocol FavoriteRecipesViewModelServicing: ObservableObject, FavoriteMealServicing {
+@MainActor protocol FavoriteRecipesViewModelServicing: ObservableObject {
     var favoriteMeals: LoadingState<[Meal]> { get }
     
     func connect()
@@ -32,15 +32,13 @@ extension FavoriteRecipesViewModel {
         fetchFavoriteMeals()
     }
     
-    func setFavorite(mealId: String) {
+    func removeFavorite(mealId: String) {
         if let index = favoriteMealsIds.firstIndex(of: mealId) {
             favoriteMealsIds.remove(at: index)
             if case .loaded(var meals) = favoriteMeals {
                 meals.removeAll(where: { $0.id == mealId } )
                 favoriteMeals = .loaded(meals)
             }
-        } else {
-            favoriteMealsIds.append(mealId)
         }
     }
 }

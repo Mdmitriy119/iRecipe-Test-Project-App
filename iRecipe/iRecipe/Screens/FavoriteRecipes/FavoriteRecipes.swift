@@ -34,14 +34,13 @@ private extension FavoriteRecipes {
     @ViewBuilder
     var content: some View {
         switch viewModel.favoriteMeals {
-            case .initial:
+            case .initial, .loading:
                 ProgressView()
             case .loaded(let meals):
-                let favoriteMeals = meals.filter { $0.isFavorite }
                 LazyVGrid(columns: columns) {
-                    ForEach(favoriteMeals) { meal in
+                    ForEach(meals) { meal in
                         MealView(meal: meal) { mealId in
-                            viewModel.setFavorite(mealId: mealId)
+                            viewModel.removeFavorite(mealId: mealId)
                         }
                     }
                 }

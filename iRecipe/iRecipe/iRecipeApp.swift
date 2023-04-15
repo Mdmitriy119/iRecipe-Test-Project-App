@@ -11,7 +11,9 @@ import SwiftUI
 struct iRecipeApp: App {
     var body: some Scene {
         WindowGroup {
-            MainView()
+            MainView(homeViewModel: HomeViewModel(),
+                     randomRecipeViewModel: RandomRecipeViewModel(),
+                     favoriteRecipesViewModel: FavoriteRecipesViewModel())
         }
     }
 }

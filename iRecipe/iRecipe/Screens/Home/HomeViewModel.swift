@@ -8,11 +8,7 @@
 import Foundation
 import Combine
 
-@MainActor protocol FavoriteMealServicing {
-    func setFavorite(mealId: String)
-}
-
-@MainActor protocol HomeViewModelServicing: ObservableObject, FavoriteMealServicing {
+@MainActor protocol HomeViewModelServicing: ObservableObject {
     var searchText: String { get set }
     var searchedMeals: LoadingState<[Meal]> { get }
     var selectedCategory: Meal.Category? { get set }
@@ -20,6 +16,7 @@ import Combine
     var mealsBySelectedCategory: LoadingState<[Meal]> { get }
     
     func connect()
+    func setFavorite(mealId: String)
 }
 
 @MainActor final class HomeViewModel: HomeViewModelServicing {
