@@ -77,8 +77,10 @@ private extension Home {
                 ProgressView()
             case .loaded(let meals):
                 LazyVGrid(columns: columns) {
-                    ForEach(meals) { meals in
-                        MealView(meal: meals)
+                    ForEach(meals) { meal in
+                        MealView(meal: meal) { mealId in
+                            viewModel.setFavorite(mealId: mealId)
+                        }
                     }
                 }
             default:

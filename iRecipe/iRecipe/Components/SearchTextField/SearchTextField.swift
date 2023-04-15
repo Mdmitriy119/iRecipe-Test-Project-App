@@ -20,7 +20,7 @@ struct SearchTextField: View {
             .padding()
             .background(Color.lightGray)
             .cornerRadius(16)
-            .shadow(color: Color.black.opacity(0.08), radius: 60, x: 0.0, y: 16)
+            .shadow(color: .black, radius: 2)
             .accentColor(Color.teal)
             .textFieldStyle(.roundedBorder)
             .keyboardType(.webSearch)

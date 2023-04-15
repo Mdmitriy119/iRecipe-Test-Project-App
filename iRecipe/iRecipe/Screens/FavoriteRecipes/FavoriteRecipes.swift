@@ -9,9 +9,9 @@ import SwiftUI
 
 struct FavoriteRecipes: View {
     var body: some View {
-        ZStack {
-            Color.blue
-                .ignoresSafeArea()
+        NavigationView {
+            
+            .navigationTitle("Favorite Recipes")
         }
     }
 }

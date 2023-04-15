@@ -14,9 +14,13 @@ import Combine
     var selectedCategory: Meal.Category? { get set }
     var mealsCategories: LoadingState<[Meal.Category]> { get }
     var mealsBySelectedCategory: LoadingState<[Meal]> { get }
+    
+    func setFavorite(mealId: String)
 }
 
 @MainActor final class HomeViewModel: HomeViewModelServicing {
+    @Storage(key: "favoriteMeals", defaultValue: [])
+    private var favoriteMeals: [String]
     private var subscriptions = Set<AnyCancellable>()
     
     // MARK: - Public properties
@@ -36,15 +40,23 @@ import Combine
 
 // MARK: - Public methods
 extension HomeViewModel {
-    func connect() {
-        listenForSearchTextChange()
-        listenForMealCategoryChange()
-        fetchMealsCategories()
+    func setFavorite(mealId: String) {
+        if let index = favoriteMeals.firstIndex(of: mealId) {
+            favoriteMeals.remove(at: index)
+        } else {
+            favoriteMeals.append(mealId)
+        }
     }
 }
 
 // MARK: - Private methods
 private extension HomeViewModel {
+    func connect() {
+        listenForSearchTextChange()
+        listenForMealCategoryChange()
+        fetchMealsCategories()
+    }
+    
     func listenForSearchTextChange() {
         $searchText
             .sink { [weak self] mealName in
@@ -81,7 +93,11 @@ private extension HomeViewModel {
         self.mealsBySelectedCategory = .initial
         Task {
             do {
-                let meals = try await GetMealsByCategoryUseCase(category: category).execute()
+                var meals = try await GetMealsByCategoryUseCase(category: category).execute()
+                let favoriteMeals = Set(favoriteMeals)
+                for index in 0..<meals.count {
+                    meals[index].isFavorite = favoriteMeals.contains(meals[index].id)
+                }
                 self.mealsBySelectedCategory = .loaded(meals)
             } catch {
                 self.mealsBySelectedCategory = .error(error)

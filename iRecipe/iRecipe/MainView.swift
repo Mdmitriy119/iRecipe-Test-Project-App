@@ -18,9 +18,9 @@ struct MainView: View {
                 .tabItem {
                     Label("Random Recipe", systemImage: "arrow.triangle.2.circlepath.circle")
                 }
-            Home(viewModel: HomeViewModel())
+            FavoriteRecipes(
                 .tabItem {
-                    Label("Home", systemImage: "heart")
+                    Label("Favorite Recipes", systemImage: "heart")
                 }
         }
         .accentColor(.teal)

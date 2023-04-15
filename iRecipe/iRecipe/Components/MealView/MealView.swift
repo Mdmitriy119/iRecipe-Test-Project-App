@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct MealView: View {
-    private let meal: Meal
+    @State private var meal: Meal
+    private let onFavoriteButtonTapped: (_ mealId: String) -> ()
     
-    init(meal: Meal) {
-        self.meal = meal
+    init(meal: Meal, onFavoriteButtonTapped: @escaping (_ mealId: String) -> (Void)) {
+        _meal = State(initialValue: meal)
+        self.onFavoriteButtonTapped = onFavoriteButtonTapped
     }
     
     var body: some View {
@@ -31,10 +33,15 @@ struct MealView: View {
                         .font(.title3)
                 })
                 .overlay(alignment: .topTrailing, content: {
-                    Image(systemName: "heart")
-                        .font(.title2)
-                        .foregroundColor(.white)
-                        .padding([.top, .trailing])
+                    Button {
+                        meal.isFavorite.toggle()
+                        onFavoriteButtonTapped(meal.id)
+                    } label: {
+                        Image(systemName: meal.isFavorite ? "heart.fill" : "heart")
+                            .font(.title2)
+                            .foregroundColor(.white)
+                            .padding([.top, .trailing])
+                    }
                 })
             }
         }
@@ -45,6 +52,6 @@ struct MealView: View {
 
 struct MealView_Previews: PreviewProvider {
     static var previews: some View {
-        MealView(meal: Meal.mockMeal)
+        Home(viewModel: HomeViewModel())
     }
 }
