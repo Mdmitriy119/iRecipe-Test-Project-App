@@ -19,16 +19,16 @@ struct MealView: View {
             if let mealStringUrl = meal.thumbnail {
                 AsyncImage(url: URL(string: mealStringUrl)) { image in
                     image.resizable()
-                        .aspectRatio(1, contentMode: .fit)
-                        .clipShape(RoundedRectangle(cornerRadius: 18))
                 } placeholder: {
                     Color.lightGray
                 }
+                .aspectRatio(1, contentMode: .fit)
+                .clipShape(RoundedRectangle(cornerRadius: 18))
                 .overlay(alignment: .bottomLeading, content: {
                     Text(meal.name)
                         .padding([.leading,. bottom])
                         .foregroundColor(.white)
-                        .font(.title2)
+                        .font(.title3)
                 })
                 .overlay(alignment: .topTrailing, content: {
                     Image(systemName: "heart")
@@ -38,8 +38,8 @@ struct MealView: View {
                 })
             }
         }
+        .frame(maxWidth: .infinity)
         .shadow(color: .black, radius: 2)
-        .padding()
     }
 }
 

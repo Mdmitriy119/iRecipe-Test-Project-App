@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct Meal: Decodable {
+struct Meal: Decodable, Identifiable {
     let id: String
     let name: String
-    let category: Category.Name
+    let category: Category.Name?
     let area: String?
     let instructions: String?
     let thumbnail: String?

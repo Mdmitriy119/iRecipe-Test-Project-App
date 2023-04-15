@@ -8,15 +8,15 @@
 import Foundation
 import Combine
 
-protocol HomeViewModelServicing: ObservableObject {
+@MainActor protocol HomeViewModelServicing: ObservableObject {
     var searchText: String { get set }
     var searchedMeals: LoadingState<[Meal]> { get }
     var selectedCategory: Meal.Category? { get set }
     var mealsCategories: LoadingState<[Meal.Category]> { get }
-    var mealsForCategory: LoadingState<[Meal]> { get }
+    var mealsBySelectedCategory: LoadingState<[Meal]> { get }
 }
 
-final class HomeViewModel: HomeViewModelServicing {
+@MainActor final class HomeViewModel: HomeViewModelServicing {
     private var subscriptions = Set<AnyCancellable>()
     
     // MARK: - Public properties
@@ -24,12 +24,12 @@ final class HomeViewModel: HomeViewModelServicing {
     @Published var searchedMeals: LoadingState<[Meal]>
     @Published var selectedCategory: Meal.Category?
     @Published var mealsCategories: LoadingState<[Meal.Category]>
-    @Published var mealsForCategory: LoadingState<[Meal]>
+    @Published var mealsBySelectedCategory: LoadingState<[Meal]>
     
     init() {
         mealsCategories = .initial
         searchedMeals = .loaded([])
-        mealsForCategory = .initial
+        mealsBySelectedCategory = .initial
         connect()
     }
 }
@@ -37,87 +37,68 @@ final class HomeViewModel: HomeViewModelServicing {
 // MARK: - Public methods
 extension HomeViewModel {
     func connect() {
-        listenForMealCategoryChange()
         listenForSearchTextChange()
-        
-        Task {
-            await fetchMealsCategories()
-            setDefaultSelectedCategory()
-        }
+        listenForMealCategoryChange()
+        fetchMealsCategories()
     }
 }
 
 // MARK: - Private methods
 private extension HomeViewModel {
-    func listenForMealCategoryChange() {
-        $selectedCategory
-            .sink { mealCategory in
-                guard let mealCategory else { return }
-                Task {
-                    await self.fetchMeals(for: mealCategory)
-                }
-            }
-            .store(in: &subscriptions)
-    }
-    
-    func fetchMeals(for category: Meal.Category) async {
-//        self.mealsForCategory = .initial
-        do {
-            let meals = try await GetMealsByCategoryUseCase(category: category).execute()
-            DispatchQueue.main.async {
-                self.mealsForCategory = .loaded(meals)
-            }
-        } catch {
-            DispatchQueue.main.async {
-                self.mealsForCategory = .error(error)
-            }
-        }
-        
-    }
-    
     func listenForSearchTextChange() {
         $searchText
-            .sink { mealName in
+            .sink { [weak self] mealName in
                 let mealName = mealName.trimmingCharacters(in: .whitespacesAndNewlines)
                 guard mealName.isNotEmpty else { return }
-                Task {
-                    await self.fetchMeals(for: mealName)
-                }
+                self?.fetchMeals(for: mealName)
             }
             .store(in: &subscriptions)
     }
     
-    func fetchMeals(for mealName: String) async {
-//        self.searchedMeals = .loading
-        do {
-            let meals = try await GetSearchedMealsUseCase(searchedMealName: mealName).execute()
-            DispatchQueue.main.async {
+    func fetchMeals(for mealName: String) {
+        self.searchedMeals = .loading
+        
+        Task {
+            do {
+                let meals = try await GetSearchedMealsUseCase(searchedMealName: mealName).execute()
                 self.searchedMeals = .loaded(meals)
-            }
-        } catch {
-            DispatchQueue.main.async {
+            } catch {
                 self.searchedMeals = .error(error)
             }
         }
     }
     
-    func fetchMealsCategories() async {
-//        self.mealsCategories = .loading
-        do {
-            let mealsCategories = try await GetMealsCategoriesUseCase().execute()
-            DispatchQueue.main.async {
-                self.mealsCategories = .loaded(mealsCategories)
+    func listenForMealCategoryChange() {
+        $selectedCategory
+            .sink { [weak self] mealCategory in
+                guard let mealCategory else { return }
+                self?.fetchMeals(for: mealCategory)
             }
-        } catch {
-            DispatchQueue.main.async {
-                self.mealsCategories = .error(error)
+            .store(in: &subscriptions)
+    }
+    
+    func fetchMeals(for category: Meal.Category) {
+        self.mealsBySelectedCategory = .initial
+        Task {
+            do {
+                let meals = try await GetMealsByCategoryUseCase(category: category).execute()
+                self.mealsBySelectedCategory = .loaded(meals)
+            } catch {
+                self.mealsBySelectedCategory = .error(error)
             }
         }
     }
     
-    func setDefaultSelectedCategory() {
-        if case let .loaded(mealsCategories) = mealsCategories {
-            selectedCategory = mealsCategories.first
+    func fetchMealsCategories() {
+        self.mealsCategories = .loading
+        Task {
+            do {
+                let mealsCategories = try await GetMealsCategoriesUseCase().execute()
+                self.mealsCategories = .loaded(mealsCategories)
+                self.selectedCategory = mealsCategories.first
+            } catch {
+                self.mealsCategories = .error(error)
+            }
         }
     }
 }
