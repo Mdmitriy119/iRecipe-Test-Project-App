@@ -1,5 +1,5 @@
 //
-//  SavedRecipes.swift
+//  FavoriteRecipes.swift
 //  iRecipe
 //
 //  Created by Dumitru Manea on 15.04.2023.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SavedRecipes: View {
+struct FavoriteRecipes: View {
     var body: some View {
         ZStack {
             Color.blue
@@ -16,8 +16,8 @@ struct SavedRecipes: View {
     }
 }
 
-struct SavedRecipes_Previews: PreviewProvider {
+struct FavoriteRecipes_Previews: PreviewProvider {
     static var previews: some View {
-        SavedRecipes()
+        FavoriteRecipes()
     }
 }
