@@ -8,12 +8,12 @@
 import Foundation
 
 protocol NetworkingServicing {
-    func fetchDataDecoded<T: Decodable> (from urlString: String, as type: T.Type) async throws -> T
+    func fetchDataDecoded<T: Decodable> (from stringUrl: String, as type: T.Type) async throws -> T
 }
 
 struct NetworkService: NetworkingServicing {
-    func fetchDataDecoded<T: Decodable>(from urlString: String, as type: T.Type) async throws -> T {
-        let data = try await fetchData(from: urlString)
+    func fetchDataDecoded<T: Decodable>(from stringUrl: String, as type: T.Type) async throws -> T {
+        let data = try await fetchData(from: stringUrl)
         
         do {
             let decoder = JSONDecoder()
@@ -27,8 +27,8 @@ struct NetworkService: NetworkingServicing {
 
 // MARK: - Private methods
 private extension NetworkService {
-    func fetchData(from urlString: String) async throws -> Data {
-        guard let url = URL(string: urlString) else {
+    func fetchData(from stringUrl: String) async throws -> Data {
+        guard let url = URL(string: stringUrl) else {
             throw NetworkError.invalidURL
         }
         
