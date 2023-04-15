@@ -18,7 +18,7 @@ struct MainView: View {
                 .tabItem {
                     Label("Random Recipe", systemImage: "arrow.triangle.2.circlepath.circle")
                 }
-            FavoriteRecipes(
+            FavoriteRecipes(viewModel: FavoriteRecipesViewModel())
                 .tabItem {
                     Label("Favorite Recipes", systemImage: "heart")
                 }

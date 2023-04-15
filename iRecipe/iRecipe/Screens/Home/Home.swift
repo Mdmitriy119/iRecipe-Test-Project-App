@@ -23,6 +23,9 @@ struct Home: View {
             }
             .navigationTitle("Home")
         }
+        .onAppear {
+            viewModel.connect()
+        }
     }
 }
 

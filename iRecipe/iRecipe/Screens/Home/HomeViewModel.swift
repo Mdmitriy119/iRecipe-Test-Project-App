@@ -8,19 +8,23 @@
 import Foundation
 import Combine
 
-@MainActor protocol HomeViewModelServicing: ObservableObject {
+@MainActor protocol FavoriteMealServicing {
+    func setFavorite(mealId: String)
+}
+
+@MainActor protocol HomeViewModelServicing: ObservableObject, FavoriteMealServicing {
     var searchText: String { get set }
     var searchedMeals: LoadingState<[Meal]> { get }
     var selectedCategory: Meal.Category? { get set }
     var mealsCategories: LoadingState<[Meal.Category]> { get }
     var mealsBySelectedCategory: LoadingState<[Meal]> { get }
     
-    func setFavorite(mealId: String)
+    func connect()
 }
 
 @MainActor final class HomeViewModel: HomeViewModelServicing {
-    @Storage(key: "favoriteMeals", defaultValue: [])
-    private var favoriteMeals: [String]
+    @Storage(key: "favoriteMealsIds", defaultValue: [])
+    private var favoriteMealsIds: [String]
     private var subscriptions = Set<AnyCancellable>()
     
     // MARK: - Public properties
@@ -34,29 +38,28 @@ import Combine
         mealsCategories = .initial
         searchedMeals = .loaded([])
         mealsBySelectedCategory = .initial
-        connect()
     }
 }
 
 // MARK: - Public methods
 extension HomeViewModel {
-    func setFavorite(mealId: String) {
-        if let index = favoriteMeals.firstIndex(of: mealId) {
-            favoriteMeals.remove(at: index)
-        } else {
-            favoriteMeals.append(mealId)
-        }
-    }
-}
-
-// MARK: - Private methods
-private extension HomeViewModel {
     func connect() {
         listenForSearchTextChange()
         listenForMealCategoryChange()
         fetchMealsCategories()
     }
     
+    func setFavorite(mealId: String) {
+        if let index = favoriteMealsIds.firstIndex(of: mealId) {
+            favoriteMealsIds.remove(at: index)
+        } else {
+            favoriteMealsIds.append(mealId)
+        }
+    }
+}
+
+// MARK: - Private methods
+private extension HomeViewModel {
     func listenForSearchTextChange() {
         $searchText
             .sink { [weak self] mealName in
@@ -94,9 +97,9 @@ private extension HomeViewModel {
         Task {
             do {
                 var meals = try await GetMealsByCategoryUseCase(category: category).execute()
-                let favoriteMeals = Set(favoriteMeals)
+                let favoriteMealsIds = Set(favoriteMealsIds)
                 for index in 0..<meals.count {
-                    meals[index].isFavorite = favoriteMeals.contains(meals[index].id)
+                    meals[index].isFavorite = favoriteMealsIds.contains(meals[index].id)
                 }
                 self.mealsBySelectedCategory = .loaded(meals)
             } catch {

@@ -6,18 +6,61 @@
 //
 
 import Foundation
-import Combine
 
-@MainActor final class FavoriteRecipesViewModelServicing: ObservableObject {
-    var favoriteMeals: 
+@MainActor protocol FavoriteRecipesViewModelServicing: ObservableObject, FavoriteMealServicing {
+    var favoriteMeals: LoadingState<[Meal]> { get }
+    
+    func connect()
 }
 
 @MainActor final class FavoriteRecipesViewModel: FavoriteRecipesViewModelServicing {
-    @Storage(key: "favoriteMeals", defaultValue: [])
-    private var favoriteMeals: [String]
-    private var subscriptions = Set<AnyCancellable>()
+    // MARK: - Private properties
+    @Storage(key: "favoriteMealsIds", defaultValue: [])
+    private var favoriteMealsIds: [String]
+    
+    // MARK: - Public properties
+    @Published var favoriteMeals: LoadingState<[Meal]>
     
     init() {
-        
+        favoriteMeals = .initial
+    }
+}
+
+// MARK: - Public methods
+extension FavoriteRecipesViewModel {
+    func connect() {
+        fetchFavoriteMeals()
+    }
+    
+    func setFavorite(mealId: String) {
+        if let index = favoriteMealsIds.firstIndex(of: mealId) {
+            favoriteMealsIds.remove(at: index)
+            if case .loaded(var meals) = favoriteMeals {
+                meals.removeAll(where: { $0.id == mealId } )
+                favoriteMeals = .loaded(meals)
+            }
+        } else {
+            favoriteMealsIds.append(mealId)
+        }
+    }
+}
+
+// MARK: - Private methods
+private extension FavoriteRecipesViewModel {
+    func fetchFavoriteMeals() {
+        favoriteMeals = .loading
+        Task {
+            do {
+                let meals = try await withThrowingTaskGroup(of: Meal.self) { taskGroup in
+                    favoriteMealsIds.forEach { id in
+                        taskGroup.addTask { try await GetFavoriteMealByIdUseCase(mealId: id).execute() }
+                    }
+                    return try await taskGroup.reduce(into: [Meal]()) { $0.append($1) }
+                }
+                favoriteMeals = .loaded(meals)
+            } catch {
+                favoriteMeals = .error(error)
+            }
+        }
     }
 }

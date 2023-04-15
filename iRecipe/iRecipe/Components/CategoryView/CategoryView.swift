@@ -26,12 +26,12 @@ struct CategoryView: View {
                     .foregroundColor(.black)
                 AsyncImage(url: URL(string: currentCategory.thumbnail)) { image in
                     image.resizable()
-                        .frame(width: 40, height: 40)
-                        .aspectRatio(1.6, contentMode: .fit)
-                        .clipShape(RoundedRectangle(cornerRadius: 18))
                 } placeholder: {
                     backgroundColor
                 }
+                .frame(width: 40, height: 40)
+                .aspectRatio(1.6, contentMode: .fit)
+                .clipShape(RoundedRectangle(cornerRadius: 18))
             }
             .padding()
             .background(
