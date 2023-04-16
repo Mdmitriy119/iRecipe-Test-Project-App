@@ -39,9 +39,12 @@ private extension FavoriteRecipes {
             case .loaded(let meals):
                 LazyVGrid(columns: columns) {
                     ForEach(meals) { meal in
-                        MealView(meal: meal) { mealId in
-                            viewModel.removeFavorite(mealId: mealId)
-                        }
+                        NavigationLink(
+                            destination: RecipeDetails(viewModel: RecipeDetailsViewModel(meal: meal))) {
+                                MealView(meal: meal) { mealId in
+                                    viewModel.removeFavorite(mealId: mealId)
+                                }
+                            }
                     }
                 }
             default:

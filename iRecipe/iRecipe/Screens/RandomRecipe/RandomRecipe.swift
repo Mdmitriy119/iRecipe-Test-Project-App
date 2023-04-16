@@ -51,9 +51,12 @@ private extension RandomRecipe {
             case .initial, .loading:
                 ProgressView()
             case .loaded(let meal):
-                MealView(meal: meal) { mealId in
-                    viewModel.setFavorite(mealId: mealId)
-                }
+                NavigationLink(
+                    destination: RecipeDetails(viewModel: RecipeDetailsViewModel(meal: meal))) {
+                        MealView(meal: meal) { mealId in
+                            viewModel.setFavorite(mealId: mealId)
+                        }
+                    }
             case .error(let error):
                 Text("Error fetching random meal: \(error.localizedDescription)")
                     .font(.title2)
