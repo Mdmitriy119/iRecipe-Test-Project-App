@@ -10,12 +10,12 @@ import Foundation
 struct GetSearchedMealsUseCase: UseCase {
     typealias Output = [Meal]
     
-    private let searchedMealName: String
+    private let searchText: String
     private let networkingService: NetworkingServicing
     
-    init(searchedMealName: String,
+    init(searchText: String,
          networkingService: NetworkingServicing = NetworkService()) {
-        self.searchedMealName = searchedMealName.capitalizedFirst
+        self.searchText = searchText
         self.networkingService = networkingService
     }
     
@@ -23,7 +23,7 @@ struct GetSearchedMealsUseCase: UseCase {
         do {
             let mealsDictionary = try await networkingService
                 .fetchDataDecoded(
-                    from: "https://www.themealdb.com/api/json/v1/1/search.php?s=\(searchedMealName)",
+                    from: "https://www.themealdb.com/api/json/v1/1/search.php?s=\(searchText)",
                     as: [String: [Meal]].self) // ["meals": []] -> Bad data format from API :/
             if let meals = mealsDictionary["meals"] {
                 return meals

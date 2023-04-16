@@ -29,7 +29,8 @@ struct MainView: View {
             set: {
                 self.selectedTab = $0
                 if selectedTab == 1 {
-                    randomRecipeViewModel.connect()
+                    // Re-fetch another meal
+                    randomRecipeViewModel.reconnect()
                 }
             })
         

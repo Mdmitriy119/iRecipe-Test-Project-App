@@ -53,7 +53,7 @@ extension RandomRecipeViewModel {
 }
 
 // MARK: - Private methods
-extension RandomRecipeViewModel {
+private extension RandomRecipeViewModel {
     func connect() {
         fetchRandomMeal()
     }

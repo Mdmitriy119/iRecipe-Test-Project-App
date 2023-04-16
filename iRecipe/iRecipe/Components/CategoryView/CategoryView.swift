@@ -53,11 +53,6 @@ struct CategoryView: View {
 
 struct CategoryView_Previews: PreviewProvider {
     static var previews: some View {
-        let mockCategory = Meal.Category(
-            id: "1",
-            name: .beef,
-            thumbnail: "https://www.themealdb.com/images/category/beef.png",
-            description: "Beef is the culinary name for meat from cattle, particularly skeletal muscle. Humans have been eating beef since prehistoric times.[1] Beef is a source of high-quality protein and essential nutrients.[2]")
-        CategoryView(currentCategory: mockCategory, selectedCategory: .constant(mockCategory))
+       Home(viewModel: HomeViewModel())
     }
 }

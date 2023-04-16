@@ -10,7 +10,7 @@ import SwiftUI
 struct Home: View {
     @ObservedObject private var viewModel: HomeViewModel
     private let columns = [GridItem(.flexible(), spacing: 20), GridItem(.flexible(), spacing: 20)]
-        
+    
     init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
     }
@@ -49,16 +49,44 @@ private extension Home {
 private extension Home {
     @ViewBuilder
     var content: some View {
-        allMealsCategories
+        searchedMealsView
             .padding()
-        mealsBySelectedCategory
+        allMealsCategoriesView
+            .padding()
+        mealsForSelectedCategoryView
             .padding([.leading, .trailing, .bottom])
     }
     
     @ViewBuilder
-    var allMealsCategories: some View {
-        switch viewModel.mealsCategories {
+    var searchedMealsView: some View {
+        switch viewModel.searchedMeals {
+            case .initial:
+                EmptyView()
             case .loading:
+                ProgressView()
+            case .loaded(let meals):
+                LazyVGrid(columns: columns) {
+                    ForEach(meals) { meal in
+                        MealView(meal: meal) { mealId in
+                            viewModel.setFavorite(mealId: mealId)
+                        }
+                    }
+                }
+            case .error:
+                if viewModel.searchText.trimmingCharacters(in: .whitespacesAndNewlines).isNotEmpty {
+                    HStack {
+                        Text("There are no meals which contains: \(viewModel.searchText)")
+                            .font(.title2)
+                        Spacer()
+                    }
+                }
+        }
+    }
+    
+    @ViewBuilder
+    var allMealsCategoriesView: some View {
+        switch viewModel.mealsCategories {
+            case .initial, .loading:
                 ProgressView()
             case .loaded(let categories):
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -74,9 +102,9 @@ private extension Home {
     }
     
     @ViewBuilder
-    var mealsBySelectedCategory: some View {
+    var mealsForSelectedCategoryView: some View {
         switch viewModel.mealsBySelectedCategory {
-            case .loading:
+            case .initial, .loading:
                 ProgressView()
             case .loaded(let meals):
                 LazyVGrid(columns: columns) {

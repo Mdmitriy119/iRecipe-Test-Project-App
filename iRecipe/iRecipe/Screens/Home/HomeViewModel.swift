@@ -33,7 +33,7 @@ import Combine
     
     init() {
         mealsCategories = .initial
-        searchedMeals = .loaded([])
+        searchedMeals = .initial
         mealsBySelectedCategory = .initial
     }
 }
@@ -59,20 +59,24 @@ extension HomeViewModel {
 private extension HomeViewModel {
     func listenForSearchTextChange() {
         $searchText
-            .sink { [weak self] mealName in
-                let mealName = mealName.trimmingCharacters(in: .whitespacesAndNewlines)
-                guard mealName.isNotEmpty else { return }
-                self?.fetchMeals(for: mealName)
+            .debounce(for: .seconds(0.5), scheduler: RunLoop.main)
+            .sink { [weak self] searchText in
+                let searchText = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+                guard searchText.isNotEmpty else {
+                    self?.searchedMeals = .initial
+                    return
+                }
+                self?.fetchMeals(for: searchText)
             }
             .store(in: &subscriptions)
     }
     
-    func fetchMeals(for mealName: String) {
+    func fetchMeals(for searchText: String) {
         self.searchedMeals = .loading
         
         Task {
             do {
-                let meals = try await GetSearchedMealsUseCase(searchedMealName: mealName).execute()
+                let meals = try await GetSearchedMealsUseCase(searchText: searchText).execute()
                 self.searchedMeals = .loaded(meals)
             } catch {
                 self.searchedMeals = .error(error)
