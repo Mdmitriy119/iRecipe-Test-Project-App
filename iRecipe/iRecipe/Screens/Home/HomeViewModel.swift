@@ -131,7 +131,7 @@ private extension HomeViewModel {
         self.mealsBySelectedCategory = .initial
         Task {
             do {
-                let meals = try await GetMealsByCategoryUseCase(category: category).execute()
+                let meals = try await GetMealsForCategoryUseCase(category: category).execute()
                 let adaptedMeals = markMealsFavoriteIfNeeded(meals: meals)
                 self.mealsBySelectedCategory = .loaded(adaptedMeals)
             } catch {

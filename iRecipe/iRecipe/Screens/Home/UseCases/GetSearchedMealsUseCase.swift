@@ -23,9 +23,9 @@ struct GetSearchedMealsUseCase: UseCase {
         do {
             let mealsDictionary = try await networkingService
                 .fetchDataDecoded(
-                    from: "https://www.themealdb.com/api/json/v1/1/search.php?s=\(searchText)",
+                    from: "\(Constants.UseCases.searchEnpoint)\(searchText)",
                     as: [String: [Meal]].self) // ["meals": []] -> Bad data format from API :/
-            if let meals = mealsDictionary["meals"] {
+            if let meals = mealsDictionary[Constants.UseCases.mealsKey] {
                 return meals
             } else {
                 throw NetworkError.dataSerializationFailed

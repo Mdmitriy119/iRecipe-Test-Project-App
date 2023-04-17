@@ -20,9 +20,9 @@ struct GetMealsCategoriesUseCase: UseCase {
         do {
             let categoriesDictionary = try await networkingService
                 .fetchDataDecoded(
-                    from: "https://www.themealdb.com/api/json/v1/1/categories.php",
+                    from: Constants.UseCases.categoriesEndpoint,
                     as: [String: [Meal.Category]].self) // ["categories": []] -> Bad data format from API :/
-            if let mealsCategories = categoriesDictionary["categories"] {
+            if let mealsCategories = categoriesDictionary[Constants.UseCases.categoriesKey] {
                 return mealsCategories
             } else { 
                 throw NetworkError.dataSerializationFailed

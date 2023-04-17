@@ -24,9 +24,9 @@ struct GetFavoriteMealByIdUseCase: UseCase {
             // ["meals": []] -> Bad data format from API, when there is no possibility to request for multiple meales in the same request :/
             let mealsDictionary = try await networkingService
                 .fetchDataDecoded(
-                    from: "https://www.themealdb.com/api/json/v1/1/lookup.php?i=\(mealId)",
+                    from:"\(Constants.UseCases.mealByIdUseCase)\(mealId)",
                     as: [String: [Meal]].self)
-            if let meals = mealsDictionary["meals"],
+            if let meals = mealsDictionary[Constants.UseCases.mealsKey],
                var meal = meals.first {
                 meal.isFavorite = true
                 return meal

@@ -21,9 +21,9 @@ struct GetRandoMealUseCase: UseCase {
             // ["meals": []] -> Bad data format from API, when there is no possibility to request for multiple meales in the same request :/
             let mealsDictionary = try await networkingService
                 .fetchDataDecoded(
-                    from: "https://www.themealdb.com/api/json/v1/1/random.php",
+                    from: Constants.UseCases.randomEndpoint,
                     as: [String: [Meal]].self)
-            if let meals = mealsDictionary["meals"],
+            if let meals = mealsDictionary[Constants.UseCases.mealsKey],
                let meal = meals.first {
                 return meal
             } else {

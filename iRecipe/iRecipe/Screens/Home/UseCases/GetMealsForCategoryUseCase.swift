@@ -1,5 +1,5 @@
 //
-//  GetMealsByCategoryUseCase.swift
+//  GetMealsForCategoryUseCase.swift
 //  iRecipe
 //
 //  Created by Dumitru Manea on 15.04.2023.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GetMealsByCategoryUseCase: UseCase {
+struct GetMealsForCategoryUseCase: UseCase {
     typealias Output = [Meal]
     
     private let category: Meal.Category
@@ -23,9 +23,9 @@ struct GetMealsByCategoryUseCase: UseCase {
         do {
             let mealsDictionary = try await networkingService
                 .fetchDataDecoded(
-                    from: "https://www.themealdb.com/api/json/v1/1/filter.php?c=\(category.name.rawValue)",
+                    from: "\(Constants.UseCases.mealsForCategoryEndpoint)\(category.name.rawValue)",
                     as: [String: [Meal]].self) // ["meals": []] -> Bad data format from API :/
-            if let meals = mealsDictionary["meals"] {
+            if let meals = mealsDictionary[Constants.UseCases.mealsKey] {
                 return meals
             } else {
                 throw NetworkError.dataSerializationFailed
