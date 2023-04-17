@@ -36,7 +36,7 @@ private extension Home {
             HStack {
                 Text(Constants.Home.headerTitle)
                     .font(.title2)
-                    .frame(maxWidth: .infinity)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
             SearchTextField(searchText: $viewModel.searchText)
         }

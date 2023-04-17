@@ -20,8 +20,7 @@ import Combine
 }
 
 @MainActor final class HomeViewModel: HomeViewModelServicing {
-    @Storage(key: "favoriteMealsIds", defaultValue: [])
-    private var favoriteMealsIds: [String]
+    // MARK: - Private methods
     private var subscriptions = Set<AnyCancellable>()
     
     // MARK: - Public properties
@@ -45,7 +44,7 @@ extension HomeViewModel {
     func refreshMealsIfNeeded() {
         // Searched meals
         if case .loaded(var meals) = searchedMeals {
-            let favoriteMealsIds = Set(favoriteMealsIds)
+            let favoriteMealsIds = Set(PreferenceService.Meals.favoriteIds)
             for index in 0..<meals.count {
                 meals[index].isFavorite = favoriteMealsIds.contains(meals[index].id)
             }
@@ -55,7 +54,7 @@ extension HomeViewModel {
         
         // Meals by category
         if case .loaded(var meals) = mealsBySelectedCategory {
-            let favoriteMealsIds = Set(favoriteMealsIds)
+            let favoriteMealsIds = Set(PreferenceService.Meals.favoriteIds)
             for index in 0..<meals.count {
                 meals[index].isFavorite = favoriteMealsIds.contains(meals[index].id)
             }
@@ -64,11 +63,7 @@ extension HomeViewModel {
     }
     
     func setFavorite(mealId: String) {
-        if let index = favoriteMealsIds.firstIndex(of: mealId) {
-            favoriteMealsIds.remove(at: index)
-        } else {
-            favoriteMealsIds.append(mealId)
-        }
+        PreferenceService.Meals.setFavorite(mealId: mealId)
         
         if case .loaded(let meals) = searchedMeals {
             let adaptedMeals = markMealsFavoriteIfNeeded(meals: meals)
@@ -155,7 +150,7 @@ private extension HomeViewModel {
     
     func markMealsFavoriteIfNeeded(meals: [Meal]) -> [Meal] {
         var meals = meals
-        let favoriteMealsIds = Set(favoriteMealsIds)
+        let favoriteMealsIds = Set(PreferenceService.Meals.favoriteIds)
         for index in 0..<meals.count {
             meals[index].isFavorite = favoriteMealsIds.contains(meals[index].id)
         }

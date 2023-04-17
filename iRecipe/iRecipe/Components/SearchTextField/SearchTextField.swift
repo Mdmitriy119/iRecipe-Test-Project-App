@@ -29,7 +29,7 @@ struct SearchTextField: View {
                     Spacer()
                     Image(systemName: Constants.SearchTextField.searchIconName)
                         .foregroundColor(.gray)
-                        .padding(.trailing)
+                        .padding(.trailing, Constants.General.padding)
                 }
             )
     }

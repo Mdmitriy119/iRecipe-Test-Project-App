@@ -39,6 +39,8 @@ struct MealDetails: View {
                         tagsView(with: tags)
                     }
                     
+                    ingredientsAndMeasuresView
+                    
                     if let instructions = meal.instructions {
                         instructionsView(with: instructions)
                     }
@@ -50,7 +52,7 @@ struct MealDetails: View {
                         YoutubeVideoView(youtubeVideoUrl: youtubeVideoUrl)
                             .frame(height: 300)
                             .cornerRadius(Constants.General.cornerRadius)
-                            .padding(Constants.General.padding)
+                            .padding([.leading, .trailing, .bottom], Constants.General.padding)
                     }
                 case .error(let error):
                     Text("\(Constants.MealDetails.errorMessage) \(error.localizedDescription)")
@@ -74,7 +76,7 @@ private extension MealDetails {
     
     func categoryOverlayText(with text: String) -> some View {
         Text(text)
-            .padding([.leading, .top], Constants.General.padding)
+            .padding([.trailing, .bottom], Constants.General.padding)
             .foregroundColor(.white)
             .font(.title3)
             .shadow(color: .black, radius: 2)
@@ -86,7 +88,7 @@ private extension MealDetails {
                 .foregroundColor(.teal)
             Text(tags.components(separatedBy: ",").joined(separator: ", "))
         }
-        .frame(alignment: .leading)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .font(.title3)
         .padding(Constants.General.padding)
     }
@@ -114,7 +116,7 @@ private extension MealDetails {
     func instructionsView(with text: String) -> some View {
         Text(text)
             .font(.body)
-            .padding()
+            .padding([.leading, .trailing, .bottom])
     }
 }
 

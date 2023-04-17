@@ -31,9 +31,10 @@ struct MealCardView: View {
                 .clipShape(RoundedRectangle(cornerRadius: Constants.General.cornerRadius))
                 .overlay(alignment: .bottomLeading, content: {
                     Text(meal.name)
-                        .padding([.leading,. bottom], Constants.General.padding)
+                        .padding([.leading,. bottom, .trailing], Constants.General.padding)
                         .foregroundColor(.white)
                         .font(.title3)
+                        .multilineTextAlignment(.leading)
                 })
                 .overlay(alignment: .topTrailing, content: {
                     Button {

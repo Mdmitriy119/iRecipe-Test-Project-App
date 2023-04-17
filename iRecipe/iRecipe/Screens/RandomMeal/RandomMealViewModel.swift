@@ -15,10 +15,6 @@ import Foundation
 }
 
 @MainActor final class RandomMealViewModel: RandomMealViewModelServicing {
-    // MARK: - Private properties
-    @Storage(key: "favoriteMealsIds", defaultValue: [])
-    private var favoriteMealsIds: [String]
-    
     // MARK: - Public properties
     @Published var meal: LoadingState<Meal>
     
@@ -35,20 +31,17 @@ extension RandomMealViewModel {
     }
     
     func setFavorite(mealId: String) {
-        if let index = favoriteMealsIds.firstIndex(of: mealId) {
-            favoriteMealsIds.remove(at: index)
-            if case .loaded(var meal) = meal {
-                meal.isFavorite = false
-                self.meal = .loaded(meal)
-            }
+        PreferenceService.Meals.setFavorite(mealId: mealId)
+        
+        if case .loaded(var meal) = meal {
+            meal.isFavorite = false
+            self.meal = .loaded(meal)
         } else {
-            favoriteMealsIds.append(mealId)
             if case .loaded(var meal) = meal {
                 meal.isFavorite = true
                 self.meal = .loaded(meal)
             }
         }
-        
     }
 }
 
@@ -63,7 +56,7 @@ private extension RandomMealViewModel {
         Task {
             do {
                 var meal = try await GetRandoMealUseCase().execute()
-                meal.isFavorite = favoriteMealsIds.contains(meal.id)
+                meal.isFavorite = PreferenceService.Meals.favoriteIds.contains(meal.id)
                 self.meal = .loaded(meal)
             } catch {
                 meal = .error(error)

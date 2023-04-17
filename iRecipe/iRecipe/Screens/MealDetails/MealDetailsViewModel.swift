@@ -17,10 +17,6 @@ import Foundation
 }
 
 @MainActor final class MealDetailsViewModel: MealDetailsViewModelServicing {
-    // MARK: - Private properties
-    @Storage(key: "favoriteMealsIds", defaultValue: [])
-    private var favoriteMealsIds: [String]
-    
     // MARK: - Public properties
     let mealName: String
     @Published var meal: LoadingState<Meal>
@@ -39,12 +35,8 @@ import Foundation
 // MARK: - Public methods
 extension MealDetailsViewModel {
     func setFavorite(mealId: String) {
-        if let index = favoriteMealsIds.firstIndex(of: mealId) {
-            favoriteMealsIds.remove(at: index)
-        } else {
-            favoriteMealsIds.append(mealId)
-        }
-        
+        PreferenceService.Meals.setFavorite(mealId: mealId)
+
         if case .loaded(let meal) = meal {
             let adaptedMeal = markMealAsFavoriteIfNeeded(meal: meal)
             self.meal = .loaded(adaptedMeal)
@@ -107,7 +99,7 @@ private extension MealDetailsViewModel {
                 
     func markMealAsFavoriteIfNeeded(meal: Meal) -> Meal {
         var meal = meal
-        meal.isFavorite = favoriteMealsIds.contains(meal.id)
+        meal.isFavorite = PreferenceService.Meals.favoriteIds.contains(meal.id)
         return meal
     }
 }
