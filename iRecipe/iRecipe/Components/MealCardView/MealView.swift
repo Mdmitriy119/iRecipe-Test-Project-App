@@ -28,10 +28,10 @@ struct MealCardView: View {
                     }
                 }
                 .aspectRatio(1, contentMode: .fit)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .clipShape(RoundedRectangle(cornerRadius: Constants.General.cornerRadius))
                 .overlay(alignment: .bottomLeading, content: {
                     Text(meal.name)
-                        .padding([.leading,. bottom])
+                        .padding([.leading,. bottom], Constants.General.padding)
                         .foregroundColor(.white)
                         .font(.title3)
                 })
@@ -39,10 +39,10 @@ struct MealCardView: View {
                     Button {
                         onFavoriteButtonTapped(meal.id)
                     } label: {
-                        Image(systemName: meal.isFavorite ? "heart.fill" : "heart")
+                        Image(systemName: meal.isFavorite ? "\(Constants.MealView.favoriteIcoName).fill" : Constants.MealView.favoriteIcoName)
                             .font(.title2)
                             .foregroundColor(meal.isFavorite ? .pink : .white)
-                            .padding([.top, .trailing])
+                            .padding([.top, .trailing], Constants.General.padding)
                     }
                 })
             }
