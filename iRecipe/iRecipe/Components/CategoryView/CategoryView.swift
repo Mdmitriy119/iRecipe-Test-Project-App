@@ -24,10 +24,13 @@ struct CategoryView: View {
                 Text(currentCategory.name.rawValue)
                     .font(.title2)
                     .foregroundColor(.black)
-                AsyncImage(url: URL(string: currentCategory.thumbnail)) { image in
-                    image.resizable()
-                } placeholder: {
-                    backgroundColor
+                CacheAsyncImage(url: URL(string: currentCategory.thumbnail)!) { phase in
+                    switch phase {
+                        case .success(let image):
+                            image.resizable()
+                        default:
+                            backgroundColor
+                    }
                 }
                 .frame(width: 40, height: 40)
                 .aspectRatio(1.6, contentMode: .fit)

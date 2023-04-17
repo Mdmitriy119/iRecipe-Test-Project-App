@@ -28,6 +28,7 @@
 		7214301029EACE6C00D6F849 /* GetMealsByCategoryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7214300F29EACE6C00D6F849 /* GetMealsByCategoryUseCase.swift */; };
 		7214301329EACECE00D6F849 /* UseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7214301229EACECE00D6F849 /* UseCase.swift */; };
 		7214301529EAD91600D6F849 /* String+CapitalizedFirst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7214301429EAD91600D6F849 /* String+CapitalizedFirst.swift */; };
+		7258A11B29ED390B006DAE20 /* CachedAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258A11A29ED390B006DAE20 /* CachedAsyncImage.swift */; };
 		728A695129EB18880035AEB9 /* GetFavoriteMealByIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728A695029EB18880035AEB9 /* GetFavoriteMealByIdUseCase.swift */; };
 		728A695429EB2F930035AEB9 /* RandomRecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728A695329EB2F930035AEB9 /* RandomRecipeViewModel.swift */; };
 		728A695629EB31690035AEB9 /* GetRandomMealUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728A695529EB31690035AEB9 /* GetRandomMealUseCase.swift */; };
@@ -63,6 +64,7 @@
 		7214300F29EACE6C00D6F849 /* GetMealsByCategoryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMealsByCategoryUseCase.swift; sourceTree = "<group>"; };
 		7214301229EACECE00D6F849 /* UseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCase.swift; sourceTree = "<group>"; };
 		7214301429EAD91600D6F849 /* String+CapitalizedFirst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+CapitalizedFirst.swift"; sourceTree = "<group>"; };
+		7258A11A29ED390B006DAE20 /* CachedAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedAsyncImage.swift; sourceTree = "<group>"; };
 		728A695029EB18880035AEB9 /* GetFavoriteMealByIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFavoriteMealByIdUseCase.swift; sourceTree = "<group>"; };
 		728A695329EB2F930035AEB9 /* RandomRecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomRecipeViewModel.swift; sourceTree = "<group>"; };
 		728A695529EB31690035AEB9 /* GetRandomMealUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRandomMealUseCase.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 		72142FDF29EA9AC900D6F849 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				7258A11929ED38F3006DAE20 /* CachedAsyncImage */,
 				72FBD06029EAF0F0002C1DF1 /* SearchTextField */,
 				72FBD05D29EAED78002C1DF1 /* CategoryView */,
 				72FBD05729EAE41B002C1DF1 /* MealView */,
@@ -232,6 +235,14 @@
 				7214300F29EACE6C00D6F849 /* GetMealsByCategoryUseCase.swift */,
 			);
 			path = UseCases;
+			sourceTree = "<group>";
+		};
+		7258A11929ED38F3006DAE20 /* CachedAsyncImage */ = {
+			isa = PBXGroup;
+			children = (
+				7258A11A29ED390B006DAE20 /* CachedAsyncImage.swift */,
+			);
+			path = CachedAsyncImage;
 			sourceTree = "<group>";
 		};
 		728A694F29EB186B0035AEB9 /* UseCases */ = {
@@ -399,6 +410,7 @@
 				72FBD06229EAF0FA002C1DF1 /* SearchTextField.swift in Sources */,
 				7214300629EAB63400D6F849 /* HomeViewModel.swift in Sources */,
 				72142FF029EA9FEE00D6F849 /* FavoriteRecipes.swift in Sources */,
+				7258A11B29ED390B006DAE20 /* CachedAsyncImage.swift in Sources */,
 				7214300429EAB07800D6F849 /* NetworkingError.swift in Sources */,
 				72142FC429EA971100D6F849 /* MainView.swift in Sources */,
 				7214300129EAB06700D6F849 /* NetworkingService.swift in Sources */,

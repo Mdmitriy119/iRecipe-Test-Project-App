@@ -19,10 +19,13 @@ struct MealView: View {
     var body: some View {
         ZStack(alignment: .topLeading) {
             if let mealStringUrl = meal.thumbnail {
-                AsyncImage(url: URL(string: mealStringUrl)) { image in
-                    image.resizable()
-                } placeholder: {
-                    Color.lightGray
+                CacheAsyncImage(url: URL(string: mealStringUrl)!) { phase in
+                    switch phase {
+                        case .success(let image):
+                            image.resizable()
+                        default:
+                            Color.lightGray
+                    }
                 }
                 .aspectRatio(1, contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: 18))
