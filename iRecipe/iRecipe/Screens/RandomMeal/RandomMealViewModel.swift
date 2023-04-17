@@ -1,5 +1,5 @@
 //
-//  RandomRecipeViewModel.swift
+//  RandomMealViewModel.swift
 //  iRecipe
 //
 //  Created by Dumitru Manea on 15.04.2023.
@@ -7,14 +7,14 @@
 
 import Foundation
 
-@MainActor protocol RandomRecipeViewModelServicing: ObservableObject {
+@MainActor protocol RandomMealViewModelServicing: ObservableObject {
     var meal: LoadingState<Meal> { get }
     
     func reconnect()
     func setFavorite(mealId: String)
 }
 
-@MainActor final class RandomRecipeViewModel: RandomRecipeViewModelServicing {
+@MainActor final class RandomMealViewModel: RandomMealViewModelServicing {
     // MARK: - Private properties
     @Storage(key: "favoriteMealsIds", defaultValue: [])
     private var favoriteMealsIds: [String]
@@ -29,7 +29,7 @@ import Foundation
 }
 
 // MARK: - Public methods
-extension RandomRecipeViewModel {
+extension RandomMealViewModel {
     func reconnect() {
         connect()
     }
@@ -53,7 +53,7 @@ extension RandomRecipeViewModel {
 }
 
 // MARK: - Private methods
-private extension RandomRecipeViewModel {
+private extension RandomMealViewModel {
     func connect() {
         fetchRandomMeal()
     }

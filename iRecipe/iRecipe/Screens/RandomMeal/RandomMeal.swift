@@ -1,5 +1,5 @@
 //
-//  RandomRecipe.swift
+//  ObservedObject.swift
 //  iRecipe
 //
 //  Created by Dumitru Manea on 15.04.2023.
@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct RandomRecipe: View {
-    @ObservedObject private var viewModel: RandomRecipeViewModel
+struct RandomMeal: View {
+    @ObservedObject private var viewModel: RandomMealViewModel
     
-    init(viewModel: RandomRecipeViewModel) {
+    init(viewModel: RandomMealViewModel) {
         self.viewModel = viewModel
     }
     
@@ -32,7 +32,7 @@ struct RandomRecipe: View {
 }
 
 // MARK: - Sub-components
-private extension RandomRecipe {
+private extension RandomMeal {
     @ViewBuilder
     var header: some View {
         HStack {
@@ -50,8 +50,8 @@ private extension RandomRecipe {
                 ProgressView()
             case .loaded(let meal):
                 NavigationLink(
-                    destination: RecipeDetails(viewModel: RecipeDetailsViewModel(meal: meal))) {
-                        MealView(meal: meal) { mealId in
+                    destination: MealDetails(viewModel: MealDetailsViewModel(meal: meal))) {
+                        MealCardView(meal: meal) { mealId in
                             viewModel.setFavorite(mealId: mealId)
                         }
                     }
@@ -62,8 +62,8 @@ private extension RandomRecipe {
     }
 }
 
-struct RandomRecipe_Previews: PreviewProvider {
+struct RandomMeal_Previews: PreviewProvider {
     static var previews: some View {
-        RandomRecipe(viewModel: RandomRecipeViewModel())
+        RandomMeal(viewModel: RandomMealViewModel())
     }
 }

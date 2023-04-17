@@ -9,6 +9,7 @@ import Foundation
 
 struct GetMealsCategoriesUseCase: UseCase {
     typealias Output = [Meal.Category]
+    
     private let networkingService: NetworkingServicing
     
     init(networkingService: NetworkingServicing = NetworkService()) {

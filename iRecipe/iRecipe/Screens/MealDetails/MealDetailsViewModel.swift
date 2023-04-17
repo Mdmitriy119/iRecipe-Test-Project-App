@@ -1,5 +1,5 @@
 //
-//  RecipeDetailsViewModel.swift
+//  MealDetailsViewModel.swift
 //  iRecipe
 //
 //  Created by Dumitru Manea on 16.04.2023.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-@MainActor protocol RecipeDetailsViewModelServicing: ObservableObject {
+@MainActor protocol MealDetailsViewModelServicing: ObservableObject {
     /// Needed for nav bar title
     var mealName: String { get }
     var meal: LoadingState<Meal> { get }
@@ -16,7 +16,7 @@ import Foundation
     func getFormattedIngredientsWithMeasures() -> [String: String]
 }
 
-@MainActor final class RecipeDetailsViewModel: RecipeDetailsViewModelServicing {
+@MainActor final class MealDetailsViewModel: MealDetailsViewModelServicing {
     // MARK: - Private properties
     @Storage(key: "favoriteMealsIds", defaultValue: [])
     private var favoriteMealsIds: [String]
@@ -37,7 +37,7 @@ import Foundation
 }
 
 // MARK: - Public methods
-extension RecipeDetailsViewModel {
+extension MealDetailsViewModel {
     func setFavorite(mealId: String) {
         if let index = favoriteMealsIds.firstIndex(of: mealId) {
             favoriteMealsIds.remove(at: index)
@@ -88,7 +88,7 @@ extension RecipeDetailsViewModel {
 }
 
 // MARK: - Private methods
-private extension RecipeDetailsViewModel {
+private extension MealDetailsViewModel {
     func connect(with mealId: String) {
         fetchMealDetails(with: mealId)
     }

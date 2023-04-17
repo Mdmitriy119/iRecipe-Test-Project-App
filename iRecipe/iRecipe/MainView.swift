@@ -10,12 +10,12 @@ import SwiftUI
 struct MainView: View {
     @State private var selectedTab = 0
     @ObservedObject private var homeViewModel: HomeViewModel
-    @ObservedObject private var randomRecipeViewModel: RandomRecipeViewModel
-    @ObservedObject private var favoriteRecipesViewModel: FavoriteRecipesViewModel
+    @ObservedObject private var randomRecipeViewModel: RandomMealViewModel
+    @ObservedObject private var favoriteRecipesViewModel: FavoriteMealsViewModel
     
     init(homeViewModel: HomeViewModel,
-         randomRecipeViewModel: RandomRecipeViewModel,
-         favoriteRecipesViewModel: FavoriteRecipesViewModel) {
+         randomRecipeViewModel: RandomMealViewModel,
+         favoriteRecipesViewModel: FavoriteMealsViewModel) {
         self.homeViewModel = homeViewModel
         self.randomRecipeViewModel = randomRecipeViewModel
         self.favoriteRecipesViewModel = favoriteRecipesViewModel
@@ -41,13 +41,13 @@ struct MainView: View {
                           systemImage: Constants.MainView.homeTabItemIconName)
                 }
                 .tag(0)
-            RandomRecipe(viewModel: randomRecipeViewModel)
+            RandomMeal(viewModel: randomRecipeViewModel)
                 .tabItem {
                     Label(Constants.MainView.randomMealTabItemName,
                           systemImage: Constants.MainView.randomMealTabItemIconName)
                 }
                 .tag(1)
-            FavoriteRecipes(viewModel: favoriteRecipesViewModel)
+            FavoriteMeals(viewModel: favoriteRecipesViewModel)
                 .tabItem {
                     Label(Constants.MainView.favoriteMealsTabItemName,
                           systemImage: Constants.MainView.favoriteMealsTabItemIconName)
@@ -61,7 +61,7 @@ struct MainView: View {
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         MainView(homeViewModel: HomeViewModel(),
-                 randomRecipeViewModel: RandomRecipeViewModel(),
-                 favoriteRecipesViewModel: FavoriteRecipesViewModel())
+                 randomRecipeViewModel: RandomMealViewModel(),
+                 favoriteRecipesViewModel: FavoriteMealsViewModel())
     }
 }

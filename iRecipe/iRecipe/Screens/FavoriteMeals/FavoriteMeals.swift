@@ -1,5 +1,5 @@
 //
-//  FavoriteRecipes.swift
+//  FavoriteMeals.swift
 //  iRecipe
 //
 //  Created by Dumitru Manea on 15.04.2023.
@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct FavoriteRecipes: View {
-    @ObservedObject private var viewModel: FavoriteRecipesViewModel
+struct FavoriteMeals: View {
+    @ObservedObject private var viewModel: FavoriteMealsViewModel
     private let columns = [GridItem(.flexible(), spacing: 20), GridItem(.flexible(), spacing: 20)]
     
-    init(viewModel: FavoriteRecipesViewModel) {
+    init(viewModel: FavoriteMealsViewModel) {
         self.viewModel = viewModel
     }
     
@@ -30,8 +30,8 @@ struct FavoriteRecipes: View {
     }
 }
 
-// MARK: - Sub-components
-private extension FavoriteRecipes {
+// MARK: - Components
+private extension FavoriteMeals {
     @ViewBuilder
     var content: some View {
         switch viewModel.favoriteMeals {
@@ -41,8 +41,8 @@ private extension FavoriteRecipes {
                 LazyVGrid(columns: columns) {
                     ForEach(meals) { meal in
                         NavigationLink(
-                            destination: RecipeDetails(viewModel: RecipeDetailsViewModel(meal: meal))) {
-                                MealView(meal: meal) { mealId in
+                            destination: MealDetails(viewModel: MealDetailsViewModel(meal: meal))) {
+                                MealCardView(meal: meal) { mealId in
                                     viewModel.removeFavorite(mealId: mealId)
                                 }
                             }
@@ -54,8 +54,8 @@ private extension FavoriteRecipes {
     }
 }
 
-struct FavoriteRecipes_Previews: PreviewProvider {
+struct FavoriteMeals_Previews: PreviewProvider {
     static var previews: some View {
-        FavoriteRecipes(viewModel: FavoriteRecipesViewModel())
+        FavoriteMeals(viewModel: FavoriteMealsViewModel())
     }
 }

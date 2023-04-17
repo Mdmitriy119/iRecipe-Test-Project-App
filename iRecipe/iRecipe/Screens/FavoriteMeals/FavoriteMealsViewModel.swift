@@ -1,5 +1,5 @@
 //
-//  FavoriteRecipesViewModel.swift
+//  FavoriteMealsViewModel.swift
 //  iRecipe
 //
 //  Created by Dumitru Manea on 15.04.2023.
@@ -7,14 +7,14 @@
 
 import Foundation
 
-@MainActor protocol FavoriteRecipesViewModelServicing: ObservableObject {
+@MainActor protocol FavoriteMealsViewModelServicing: ObservableObject {
     var favoriteMeals: LoadingState<[Meal]> { get }
     
     func connect()
     func removeFavorite(mealId: String)
 }
 
-@MainActor final class FavoriteRecipesViewModel: FavoriteRecipesViewModelServicing {
+@MainActor final class FavoriteMealsViewModel: FavoriteMealsViewModelServicing {
     // MARK: - Private properties
     @Storage(key: "favoriteMealsIds", defaultValue: [])
     private var favoriteMealsIds: [String]
@@ -28,7 +28,7 @@ import Foundation
 }
 
 // MARK: - Public methods
-extension FavoriteRecipesViewModel {
+extension FavoriteMealsViewModel {
     func connect() {
         fetchFavoriteMeals()
     }
@@ -46,7 +46,7 @@ extension FavoriteRecipesViewModel {
 }
 
 // MARK: - Private methods
-private extension FavoriteRecipesViewModel {
+private extension FavoriteMealsViewModel {
     func fetchFavoriteMeals() {
         favoriteMeals = .loading
         Task {

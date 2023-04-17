@@ -64,8 +64,8 @@ private extension Home {
                 LazyVGrid(columns: Constants.General.vGridColumns) {
                     ForEach(meals) { meal in
                         NavigationLink(
-                            destination: RecipeDetails(viewModel: RecipeDetailsViewModel(meal: meal))) {
-                                MealView(meal: meal) { mealId in
+                            destination: MealDetails(viewModel: MealDetailsViewModel(meal: meal))) {
+                                MealCardView(meal: meal) { mealId in
                                     viewModel.setFavorite(mealId: mealId)
                                 }
                             }
@@ -91,7 +91,7 @@ private extension Home {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         ForEach(categories) { category in
-                            CategoryView(currentCategory: category,
+                            MealCategoryView(currentCategory: category,
                                          selectedCategory: $viewModel.selectedCategory)
                         }
                     }
@@ -110,11 +110,11 @@ private extension Home {
                 LazyVGrid(columns: Constants.General.vGridColumns) {
                     ForEach(meals) { meal in
                         NavigationLink(
-                            destination: RecipeDetails(
-                                viewModel: RecipeDetailsViewModel(
+                            destination: MealDetails(
+                                viewModel: MealDetailsViewModel(
                                     meal: meal,
                                     shouldFetchMealDetails: true))) {
-                            MealView(meal: meal) { mealId in
+                            MealCardView(meal: meal) { mealId in
                                 viewModel.setFavorite(mealId: mealId)
                             }
                         }

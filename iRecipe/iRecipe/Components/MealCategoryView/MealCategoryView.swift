@@ -1,5 +1,5 @@
 //
-//  CategoryView.swift
+//  MealCategoryView.swift
 //  iRecipe
 //
 //  Created by Dumitru Manea on 15.04.2023.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CategoryView: View {
+struct MealCategoryView: View {
     private let currentCategory: Meal.Category
     @Binding private var selectedCategory: Meal.Category?
     

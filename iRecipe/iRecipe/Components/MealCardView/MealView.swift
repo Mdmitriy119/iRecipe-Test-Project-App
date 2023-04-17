@@ -1,5 +1,5 @@
 //
-//  MealView.swift
+//  MealCardView.swift
 //  iRecipe
 //
 //  Created by Dumitru Manea on 15.04.2023.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MealView: View {
+struct MealCardView: View {
     private var meal: Meal
     private let onFavoriteButtonTapped: (_ mealId: String) -> ()
     
@@ -52,7 +52,7 @@ struct MealView: View {
     }
 }
 
-struct MealView_Previews: PreviewProvider {
+struct MealCardView_Previews: PreviewProvider {
     static var previews: some View {
         Home(viewModel: HomeViewModel())
     }

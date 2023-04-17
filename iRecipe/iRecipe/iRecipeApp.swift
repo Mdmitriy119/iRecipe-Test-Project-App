@@ -12,8 +12,8 @@ struct iRecipeApp: App {
     var body: some Scene {
         WindowGroup {
             MainView(homeViewModel: HomeViewModel(),
-                     randomRecipeViewModel: RandomRecipeViewModel(),
-                     favoriteRecipesViewModel: FavoriteRecipesViewModel())
+                     randomRecipeViewModel: RandomMealViewModel(),
+                     favoriteRecipesViewModel: FavoriteMealsViewModel())
         }
     }
 }

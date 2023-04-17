@@ -1,5 +1,5 @@
 //
-//  RecipeDetails.swift
+//  MealDetails.swift
 //  iRecipe
 //
 //  Created by Dumitru Manea on 16.04.2023.
@@ -8,11 +8,11 @@
 import SwiftUI
 import WebKit
 
-struct RecipeDetails: View {
-    @ObservedObject private var viewModel: RecipeDetailsViewModel
+struct MealDetails: View {
+    @ObservedObject private var viewModel: MealDetailsViewModel
     private let columns = [GridItem(.flexible(), spacing: 20), GridItem(.flexible(), spacing: 20)]
     
-    init(viewModel: RecipeDetailsViewModel) {
+    init(viewModel: MealDetailsViewModel) {
         self.viewModel = viewModel
     }
     
@@ -22,7 +22,7 @@ struct RecipeDetails: View {
                 case .initial, .loading:
                     ProgressView()
                 case .loaded(let meal):
-                    MealView(meal: meal) { mealId in
+                    MealCardView(meal: meal) { mealId in
                         viewModel.setFavorite(mealId: mealId)
                     }
                     .overlay(alignment: .topLeading, content: {
@@ -98,13 +98,13 @@ struct RecipeDetails: View {
     }
 }
 
-// MARK: - Sub-components
-private extension RecipeDetails {
+// MARK: - Componenets
+private extension MealDetails {
     
 }
 
 struct RecipeDetails_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeDetails(viewModel: RecipeDetailsViewModel(meal: Mocks.meal))
+        MealDetails(viewModel: MealDetailsViewModel(meal: Mocks.meal))
     }
 }
