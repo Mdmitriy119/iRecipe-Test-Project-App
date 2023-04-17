@@ -74,7 +74,7 @@ private extension Home {
                         }
                     }
                 }
-            } 
+            }
         }
     }
     
