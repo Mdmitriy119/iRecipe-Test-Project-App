@@ -24,6 +24,7 @@ struct FavoriteRecipes: View {
             .navigationTitle("Favorite Recipes")
         }
         .onAppear {
+            // We should fetch onAppear always fav meals
             viewModel.connect()
         }
     }

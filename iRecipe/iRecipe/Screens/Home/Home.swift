@@ -24,7 +24,7 @@ struct Home: View {
             .navigationTitle("Home")
         }
         .onAppear {
-            viewModel.connect()
+            viewModel.refreshMealsIfNeeded()
         }
     }
 }
@@ -67,9 +67,12 @@ private extension Home {
             case .loaded(let meals):
                 LazyVGrid(columns: columns) {
                     ForEach(meals) { meal in
-                        MealView(meal: meal) { mealId in
-                            viewModel.setFavorite(mealId: mealId)
-                        }
+                        NavigationLink(
+                            destination: RecipeDetails(viewModel: RecipeDetailsViewModel(meal: meal))) {
+                                MealView(meal: meal) { mealId in
+                                    viewModel.setFavorite(mealId: mealId)
+                                }
+                            }
                     }
                 }
             case .error:
@@ -109,9 +112,12 @@ private extension Home {
             case .loaded(let meals):
                 LazyVGrid(columns: columns) {
                     ForEach(meals) { meal in
-                        MealView(meal: meal) { mealId in
-                            viewModel.setFavorite(mealId: mealId)
-                        }
+                        NavigationLink(
+                            destination: RecipeDetails(viewModel: RecipeDetailsViewModel(meal: meal))) {
+                                MealView(meal: meal) { mealId in
+                                    viewModel.setFavorite(mealId: mealId)
+                                }
+                            }
                     }
                 }
             default:

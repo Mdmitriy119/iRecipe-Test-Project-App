@@ -16,19 +16,19 @@ struct RandomRecipe: View {
     
     var body: some View {
         NavigationView {
-        GeometryReader { geometry in
-            ScrollView {
-                VStack {
-                    header
-                        .padding()
-                    content
-                        .padding(.horizontal)
+            GeometryReader { geometry in
+                ScrollView {
+                    VStack {
+                        header
+                            .padding()
+                        content
+                            .padding(.horizontal)
+                    }
+                    .frame(width: geometry.size.width)
+                    .frame(minHeight: geometry.size.height)
                 }
-                .frame(width: geometry.size.width)
-                .frame(minHeight: geometry.size.height)
+                .navigationTitle("Random Recipe")
             }
-            .navigationTitle("Random Recipe")
-        }
         }
     }
 }

@@ -11,6 +11,7 @@ import Foundation
     var favoriteMeals: LoadingState<[Meal]> { get }
     
     func connect()
+    func removeFavorite(mealId: String)
 }
 
 @MainActor final class FavoriteRecipesViewModel: FavoriteRecipesViewModelServicing {
@@ -55,7 +56,8 @@ private extension FavoriteRecipesViewModel {
                     }
                     return try await taskGroup.reduce(into: [Meal]()) { $0.append($1) }
                 }
-                favoriteMeals = .loaded(meals)
+                let sortedMeals = meals.sorted(by: { $0.id < $1.id })
+                favoriteMeals = .loaded(sortedMeals)
             } catch {
                 favoriteMeals = .error(error)
             }

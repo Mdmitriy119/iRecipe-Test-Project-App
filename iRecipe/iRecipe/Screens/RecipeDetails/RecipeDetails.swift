@@ -19,7 +19,7 @@ struct RecipeDetails: View {
             mealCardView
             mealInstructions
         }
-        .edgesIgnoringSafeArea(.all)
+        .edgesIgnoringSafeArea(.top)
     }
 }
 
