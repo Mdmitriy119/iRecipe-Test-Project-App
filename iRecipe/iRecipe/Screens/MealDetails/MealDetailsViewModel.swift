@@ -78,7 +78,9 @@ extension MealDetailsViewModel {
 // MARK: - Private methods
 private extension MealDetailsViewModel {
     func fetchMealDetails(with mealId: String) {
+        errorWhileFetchingMeal = nil
         isMealLoading = true
+        
         Task {
             do {
                 meal = try await GetMealByIdUseCase(mealId: mealId).execute()

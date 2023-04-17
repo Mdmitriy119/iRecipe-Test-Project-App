@@ -36,7 +36,9 @@ extension FavoriteMealsViewModel {
 // MARK: - Private methods
 private extension FavoriteMealsViewModel {
     func fetchFavoriteMeals() {
+        errorWhileFetchingFavoriteMeals = nil
         isFavoriteMealsLoading = true
+        
         Task {
             do {
                 let meals = try await withThrowingTaskGroup(of: Meal.self) { taskGroup in

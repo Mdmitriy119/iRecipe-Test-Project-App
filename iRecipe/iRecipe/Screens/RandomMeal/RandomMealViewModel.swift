@@ -40,7 +40,9 @@ private extension RandomMealViewModel {
     }
     
     func fetchRandomMeal() {
+        errorWhileFetchingMeal = nil
         isMealLoading = true
+        
         Task {
             do {
                 let meal = try await GetRandoMealUseCase().execute()

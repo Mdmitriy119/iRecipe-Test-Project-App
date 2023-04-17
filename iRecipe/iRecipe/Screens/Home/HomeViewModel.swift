@@ -80,6 +80,7 @@ private extension HomeViewModel {
     }
     
     func fetchMeals(for searchText: String) {
+        self.errorWhileFetchingSearchedMeals = nil
         self.isSearchedMealsLoading = true
         
         Task {
@@ -103,7 +104,9 @@ private extension HomeViewModel {
     }
     
     func fetchMeals(for category: Meal.Category) {
+        self.errorWhileFetchingMealForCategory = nil
         self.isMealsForCategoryLoading = true
+        
         Task {
             do {
                 mealsForSelectedCategory = try await GetMealsForCategoryUseCase(category: category).execute()
