@@ -7,13 +7,15 @@
 
 import Foundation
 
-protocol RecipeDetailsViewModelServicing: ObservableObject {
+@MainActor protocol RecipeDetailsViewModelServicing: ObservableObject {
     /// Needed for nav bar title
     var mealName: String { get }
     var meal: LoadingState<Meal> { get }
+    
+    func setFavorite(mealId: String)
 }
 
-final class RecipeDetailsViewModel: RecipeDetailsViewModelServicing {
+@MainActor final class RecipeDetailsViewModel: RecipeDetailsViewModelServicing {
     // MARK: - Private properties
     @Storage(key: "favoriteMealsIds", defaultValue: [])
     private var favoriteMealsIds: [String]
@@ -31,7 +33,22 @@ final class RecipeDetailsViewModel: RecipeDetailsViewModelServicing {
             self.meal = .loaded(meal)
         }
     }
-    
+}
+
+// MARK: - Public methods
+extension RecipeDetailsViewModel {
+    func setFavorite(mealId: String) {
+        if let index = favoriteMealsIds.firstIndex(of: mealId) {
+            favoriteMealsIds.remove(at: index)
+        } else {
+            favoriteMealsIds.append(mealId)
+        }
+        
+        if case .loaded(let meal) = meal {
+            let adaptedMeal = markMealAsFavoriteIfNeeded(meal: meal)
+            self.meal = .loaded(adaptedMeal)
+        }
+    }
 }
 
 // MARK: - Private methods

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RecipeDetails: View {
-    private let viewModel: RecipeDetailsViewModel
+    @ObservedObject private var viewModel: RecipeDetailsViewModel
     
     init(viewModel: RecipeDetailsViewModel) {
         self.viewModel = viewModel
@@ -21,7 +21,7 @@ struct RecipeDetails: View {
                     ProgressView()
                 case .loaded(let meal):
                     MealView(meal: meal) { mealId in
-                        print("Here: \(mealId)")
+                        viewModel.setFavorite(mealId: mealId)
                     }
                     if let instructions = meal.instructions {
                         Text(instructions)

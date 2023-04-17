@@ -61,8 +61,6 @@ extension HomeViewModel {
             }
             self.mealsBySelectedCategory = .loaded(meals)
         }
-        
-        self.objectWillChange.send()
     }
     
     func setFavorite(mealId: String) {
