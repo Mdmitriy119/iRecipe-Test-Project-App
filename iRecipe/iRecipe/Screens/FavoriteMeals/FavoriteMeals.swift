@@ -9,7 +9,6 @@ import SwiftUI
 
 struct FavoriteMeals: View {
     @ObservedObject private var viewModel: FavoriteMealsViewModel
-    private let columns = [GridItem(.flexible(), spacing: 20), GridItem(.flexible(), spacing: 20)]
     
     init(viewModel: FavoriteMealsViewModel) {
         self.viewModel = viewModel
@@ -19,9 +18,9 @@ struct FavoriteMeals: View {
         NavigationView {
             ScrollView {
                 content
-                    .padding()
+                    .padding(Constants.General.padding)
             }
-            .navigationTitle("Favorite Recipes")
+            .navigationTitle(Constants.FavoriteMeals.navigationTitle)
         }
         .onAppear {
             // We should fetch onAppear always fav meals
@@ -38,7 +37,7 @@ private extension FavoriteMeals {
             case .initial, .loading:
                 ProgressView()
             case .loaded(let meals):
-                LazyVGrid(columns: columns) {
+                LazyVGrid(columns: Constants.General.vGridColumns) {
                     ForEach(meals) { meal in
                         NavigationLink(
                             destination: MealDetails(viewModel: MealDetailsViewModel(meal: meal))) {
