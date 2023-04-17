@@ -15,11 +15,11 @@ struct SearchTextField: View {
     }
     
     var body: some View {
-        TextField("Type your meal", text: $searchText)
+        TextField(Constants.SearchTextField.placeholder, text: $searchText)
             .textFieldStyle(.plain)
-            .padding()
+            .padding(Constants.General.padding)
             .background(Color.lightGray)
-            .cornerRadius(16)
+            .cornerRadius(Constants.General.cornerRadius)
             .shadow(color: .black, radius: 2)
             .accentColor(Color.teal)
             .textFieldStyle(.roundedBorder)
@@ -27,7 +27,7 @@ struct SearchTextField: View {
             .overlay(
                 HStack {
                     Spacer()
-                    Image(systemName: "magnifyingglass")
+                    Image(systemName: Constants.SearchTextField.searchIconName)
                         .foregroundColor(.gray)
                         .padding(.trailing)
                 }

@@ -36,6 +36,8 @@
 		7262DD8E29EDBFDD00998D7D /* Constants+RandomMeal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7262DD8D29EDBFDD00998D7D /* Constants+RandomMeal.swift */; };
 		7262DD9029EDC0B700998D7D /* Constants+FavoriteMeals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7262DD8F29EDC0B700998D7D /* Constants+FavoriteMeals.swift */; };
 		7262DD9229EDC14800998D7D /* Constants+MealDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7262DD9129EDC14800998D7D /* Constants+MealDetails.swift */; };
+		7262DD9429EDC3D300998D7D /* Constants+SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7262DD9329EDC3D300998D7D /* Constants+SearchTextField.swift */; };
+		7262DD9629EDC4AE00998D7D /* Constants+MealCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7262DD9529EDC4AE00998D7D /* Constants+MealCategoryView.swift */; };
 		728A695129EB18880035AEB9 /* GetFavoriteMealByIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728A695029EB18880035AEB9 /* GetFavoriteMealByIdUseCase.swift */; };
 		728A695429EB2F930035AEB9 /* RandomMealViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728A695329EB2F930035AEB9 /* RandomMealViewModel.swift */; };
 		728A695629EB31690035AEB9 /* GetRandomMealUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728A695529EB31690035AEB9 /* GetRandomMealUseCase.swift */; };
@@ -83,6 +85,8 @@
 		7262DD8D29EDBFDD00998D7D /* Constants+RandomMeal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+RandomMeal.swift"; sourceTree = "<group>"; };
 		7262DD8F29EDC0B700998D7D /* Constants+FavoriteMeals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+FavoriteMeals.swift"; sourceTree = "<group>"; };
 		7262DD9129EDC14800998D7D /* Constants+MealDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+MealDetails.swift"; sourceTree = "<group>"; };
+		7262DD9329EDC3D300998D7D /* Constants+SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+SearchTextField.swift"; sourceTree = "<group>"; };
+		7262DD9529EDC4AE00998D7D /* Constants+MealCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+MealCategoryView.swift"; sourceTree = "<group>"; };
 		728A695029EB18880035AEB9 /* GetFavoriteMealByIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFavoriteMealByIdUseCase.swift; sourceTree = "<group>"; };
 		728A695329EB2F930035AEB9 /* RandomMealViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomMealViewModel.swift; sourceTree = "<group>"; };
 		728A695529EB31690035AEB9 /* GetRandomMealUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRandomMealUseCase.swift; sourceTree = "<group>"; };
@@ -312,6 +316,8 @@
 				7262DD8D29EDBFDD00998D7D /* Constants+RandomMeal.swift */,
 				7262DD8F29EDC0B700998D7D /* Constants+FavoriteMeals.swift */,
 				7262DD9129EDC14800998D7D /* Constants+MealDetails.swift */,
+				7262DD9329EDC3D300998D7D /* Constants+SearchTextField.swift */,
+				7262DD9529EDC4AE00998D7D /* Constants+MealCategoryView.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -457,6 +463,7 @@
 			files = (
 				72142FF929EAAE2600D6F849 /* Meal+Category.swift in Sources */,
 				72FBD06729EB0CF7002C1DF1 /* Storage.swift in Sources */,
+				7262DD9629EDC4AE00998D7D /* Constants+MealCategoryView.swift in Sources */,
 				728A695429EB2F930035AEB9 /* RandomMealViewModel.swift in Sources */,
 				7258A12829ED68A7006DAE20 /* Mocks.swift in Sources */,
 				7214300829EAB73500D6F849 /* LoadingState.swift in Sources */,
@@ -472,6 +479,7 @@
 				7262DD8C29EDBE3E00998D7D /* Constants+UseCases.swift in Sources */,
 				7258A11B29ED390B006DAE20 /* CachedAsyncImage.swift in Sources */,
 				7214300429EAB07800D6F849 /* NetworkingError.swift in Sources */,
+				7262DD9429EDC3D300998D7D /* Constants+SearchTextField.swift in Sources */,
 				72142FC429EA971100D6F849 /* MainView.swift in Sources */,
 				72AD761E29EDB83100729178 /* Constants+General.swift in Sources */,
 				7262DD9229EDC14800998D7D /* Constants+MealDetails.swift in Sources */,

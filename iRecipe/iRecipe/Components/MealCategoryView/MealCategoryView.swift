@@ -32,20 +32,23 @@ struct MealCategoryView: View {
                             backgroundColor
                     }
                 }
-                .frame(width: 40, height: 40)
+                .frame(width: Constants.MealCategoryView.categoryImageSize,
+                       height: Constants.MealCategoryView.categoryImageSize)
                 .aspectRatio(1.6, contentMode: .fit)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .clipShape(RoundedRectangle(cornerRadius: Constants.General.cornerRadius))
             }
             .padding()
             .background(
-                backgroundColor
-                    .cornerRadius(16)
+                backgroundColor.cornerRadius(Constants.General.cornerRadius)
             )
         }
     }
-    
+}
+
+// MARK: - Components
+private extension MealCategoryView {
     @ViewBuilder
-    private var backgroundColor: some View {
+    var backgroundColor: some View {
         if currentCategory == selectedCategory {
             Color.teal
         } else {

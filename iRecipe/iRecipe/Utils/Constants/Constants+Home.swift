@@ -10,7 +10,7 @@ import Foundation
 extension Constants {
     enum Home {
         static let navigationTitle = "Home"
-        static let searchBarPlaceholder = "What meal are you searching for?"
+        static let headerTitle = "What meal are you searching for?"
         static let noSearchedMealsErrorMessage = "There are no meals which contains:"
     }
 }

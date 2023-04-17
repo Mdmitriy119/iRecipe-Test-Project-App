@@ -34,7 +34,7 @@ private extension Home {
     var header: some View {
         Group {
             HStack {
-                Text(Constants.Home.searchBarPlaceholder)
+                Text(Constants.Home.headerTitle)
                     .font(.title2)
                     .frame(maxWidth: .infinity)
             }
