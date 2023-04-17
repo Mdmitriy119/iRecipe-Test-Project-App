@@ -33,6 +33,7 @@
 		7258A12629ED685D006DAE20 /* Mocks+Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258A12529ED685D006DAE20 /* Mocks+Meal.swift */; };
 		7258A12829ED68A7006DAE20 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258A12729ED68A7006DAE20 /* Mocks.swift */; };
 		7262DD8C29EDBE3E00998D7D /* Constants+UseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7262DD8B29EDBE3E00998D7D /* Constants+UseCases.swift */; };
+		7262DD8E29EDBFDD00998D7D /* Constants+RandomMeal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7262DD8D29EDBFDD00998D7D /* Constants+RandomMeal.swift */; };
 		728A695129EB18880035AEB9 /* GetFavoriteMealByIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728A695029EB18880035AEB9 /* GetFavoriteMealByIdUseCase.swift */; };
 		728A695429EB2F930035AEB9 /* RandomMealViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728A695329EB2F930035AEB9 /* RandomMealViewModel.swift */; };
 		728A695629EB31690035AEB9 /* GetRandomMealUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728A695529EB31690035AEB9 /* GetRandomMealUseCase.swift */; };
@@ -77,6 +78,7 @@
 		7258A12529ED685D006DAE20 /* Mocks+Meal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Mocks+Meal.swift"; sourceTree = "<group>"; };
 		7258A12729ED68A7006DAE20 /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
 		7262DD8B29EDBE3E00998D7D /* Constants+UseCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+UseCases.swift"; sourceTree = "<group>"; };
+		7262DD8D29EDBFDD00998D7D /* Constants+RandomMeal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+RandomMeal.swift"; sourceTree = "<group>"; };
 		728A695029EB18880035AEB9 /* GetFavoriteMealByIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFavoriteMealByIdUseCase.swift; sourceTree = "<group>"; };
 		728A695329EB2F930035AEB9 /* RandomMealViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomMealViewModel.swift; sourceTree = "<group>"; };
 		728A695529EB31690035AEB9 /* GetRandomMealUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRandomMealUseCase.swift; sourceTree = "<group>"; };
@@ -303,6 +305,7 @@
 				72AD761B29EDB72F00729178 /* Constants+Home.swift */,
 				72AD761D29EDB83100729178 /* Constants+General.swift */,
 				7262DD8B29EDBE3E00998D7D /* Constants+UseCases.swift */,
+				7262DD8D29EDBFDD00998D7D /* Constants+RandomMeal.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				72142FF229EAA68C00D6F849 /* Collection+Extension.swift in Sources */,
 				72142FDE29EA9A8100D6F849 /* Color+Extension.swift in Sources */,
 				72FBD06229EAF0FA002C1DF1 /* SearchTextField.swift in Sources */,
+				7262DD8E29EDBFDD00998D7D /* Constants+RandomMeal.swift in Sources */,
 				7214300629EAB63400D6F849 /* HomeViewModel.swift in Sources */,
 				72142FF029EA9FEE00D6F849 /* FavoriteMeals.swift in Sources */,
 				7262DD8C29EDBE3E00998D7D /* Constants+UseCases.swift in Sources */,

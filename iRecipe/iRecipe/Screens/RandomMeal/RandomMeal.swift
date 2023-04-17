@@ -20,29 +20,30 @@ struct RandomMeal: View {
                 ScrollView {
                     VStack {
                         header
-                            .padding()
+                            .padding(Constants.General.padding)
                         content
-                            .padding(.horizontal)
+                            .padding(.horizontal, Constants.General.padding)
                     }
                 }
             }
-            .navigationTitle("Random Recipe")
+            .navigationTitle(Constants.RandomMeal.navigationTitle)
         }
     }
 }
 
-// MARK: - Sub-components
+// MARK: - Components
 private extension RandomMeal {
     @ViewBuilder
     var header: some View {
         HStack {
             Spacer()
-            Text("Tap one more time on tab bar button to see another recipe!")
+            Text(Constants.RandomMeal.headerTitle)
                 .font(.title2)
                 .multilineTextAlignment(.center)
             Spacer()
         }
     }
+    
     @ViewBuilder
     var content: some View {
         switch viewModel.meal {
@@ -56,7 +57,7 @@ private extension RandomMeal {
                         }
                     }
             case .error(let error):
-                Text("Error fetching random meal: \(error.localizedDescription)")
+                Text("\(Constants.RandomMeal.errorMessage) \(error.localizedDescription)")
                     .font(.title2)
         }
     }
