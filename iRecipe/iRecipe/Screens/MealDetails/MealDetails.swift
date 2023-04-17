@@ -10,7 +10,6 @@ import WebKit
 
 struct MealDetails: View {
     @ObservedObject private var viewModel: MealDetailsViewModel
-    private let columns = [GridItem(.flexible(), spacing: 20), GridItem(.flexible(), spacing: 20)]
     
     init(viewModel: MealDetailsViewModel) {
         self.viewModel = viewModel
@@ -27,69 +26,34 @@ struct MealDetails: View {
                     }
                     .overlay(alignment: .topLeading, content: {
                         if let area = meal.area {
-                            Text(area)
-                                .padding([.leading, .top])
-                                .foregroundColor(.white)
-                                .font(.title3)
-                                .shadow(color: .black, radius: 2)
+                            areaOverlayText(with: area)
                         }
                     })
                     .overlay(alignment: .bottomTrailing, content: {
                         if let category = meal.category {
-                            Text(category.rawValue)
-                                .padding([.trailing, .bottom])
-                                .foregroundColor(.white)
-                                .font(.title3)
-                                .shadow(color: .black, radius: 2)
+                            categoryOverlayText(with: category.rawValue)
                         }
                     })
                     
-                    HStack {
-                        if let tags = meal.tags {
-                            Text("Tags:")
-                                .foregroundColor(.teal)
-                            Text(tags.components(separatedBy: ",").joined(separator: ", "))
-                        }
+                    if let tags = meal.tags {
+                        tagsView(with: tags)
                     }
-                    .frame(alignment: .leading)
-                    .font(.title3)
-                    .padding()
-                    
-                    LazyVGrid(columns: columns) {
-                        let ingredientsWithMeasures = viewModel.getFormattedIngredientsWithMeasures()
-                        ForEach(Array(ingredientsWithMeasures.keys.sorted()), id: \.self) { key in
-                            Group {
-                                Text(key)
-                                Text(ingredientsWithMeasures[key]!)
-                            }
-                            .font(.headline)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.white)
-                            .cornerRadius(16)
-                            .shadow(color: Color.gray.opacity(0.3), radius: 4, x: 0, y: 2)
-                        }
-                    }
-                    .padding([.leading, .trailing, .bottom])
-                    
                     
                     if let instructions = meal.instructions {
-                        Text(instructions)
-                            .font(.body)
-                            .padding()
+                        instructionsView(with: instructions)
                     }
                     
                     if let youtubeVideoUrlString = meal.youtube,
-                       let youtubeVideoUrl = URL(string: youtubeVideoUrlString.replacingOccurrences(of: "watch?v=", with: "embed/")) {
+                       let youtubeVideoUrl = URL(string: youtubeVideoUrlString
+                        .replacingOccurrences(of: Constants.MealDetails.youtubeUrlTextToReplace,
+                                              with: Constants.MealDetails.youtubeUrlTextReplaceWith)) {
                         YoutubeVideoView(youtubeVideoUrl: youtubeVideoUrl)
                             .frame(height: 300)
-                            .cornerRadius(16)
-                            .padding()
+                            .cornerRadius(Constants.General.cornerRadius)
+                            .padding(Constants.General.padding)
                     }
-                    
-                    
                 case .error(let error):
-                    Text("Error fetching meal details: \(error.localizedDescription)")
+                    Text("\(Constants.MealDetails.errorMessage) \(error.localizedDescription)")
                         .font(.title2)
             }
         }
@@ -100,7 +64,58 @@ struct MealDetails: View {
 
 // MARK: - Componenets
 private extension MealDetails {
+    func areaOverlayText(with text: String) -> some View {
+        Text(text)
+            .padding([.leading, .top], Constants.General.padding)
+            .foregroundColor(.white)
+            .font(.title3)
+            .shadow(color: .black, radius: 2)
+    }
     
+    func categoryOverlayText(with text: String) -> some View {
+        Text(text)
+            .padding([.leading, .top], Constants.General.padding)
+            .foregroundColor(.white)
+            .font(.title3)
+            .shadow(color: .black, radius: 2)
+    }
+    
+    func tagsView(with tags: String) -> some View {
+        HStack {
+            Text(Constants.MealDetails.tagsTitle)
+                .foregroundColor(.teal)
+            Text(tags.components(separatedBy: ",").joined(separator: ", "))
+        }
+        .frame(alignment: .leading)
+        .font(.title3)
+        .padding(Constants.General.padding)
+    }
+    
+    @ViewBuilder
+    var ingredientsAndMeasuresView: some View {
+        LazyVGrid(columns: Constants.General.vGridColumns) {
+            let ingredientsWithMeasures = viewModel.getFormattedIngredientsWithMeasures()
+            ForEach(Array(ingredientsWithMeasures.keys.sorted()), id: \.self) { key in
+                Group {
+                    Text(key)
+                    Text(ingredientsWithMeasures[key]!)
+                }
+                .font(.headline)
+                .frame(maxWidth: .infinity)
+                .padding(Constants.General.padding)
+                .background(Color.white)
+                .cornerRadius(Constants.General.cornerRadius)
+                .shadow(color: Color.gray.opacity(0.3), radius: 4, x: 0, y: 2)
+            }
+        }
+        .padding([.leading, .trailing, .bottom], Constants.General.padding)
+    }
+    
+    func instructionsView(with text: String) -> some View {
+        Text(text)
+            .font(.body)
+            .padding()
+    }
 }
 
 struct RecipeDetails_Previews: PreviewProvider {
