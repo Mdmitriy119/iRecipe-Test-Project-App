@@ -9,11 +9,11 @@ import Foundation
 
 extension Constants {
     enum MainView {
-        static let homeTabItemName: String = "Home"
-        static let homeTabItemIconName: String = "house"
-        static let randomMealTabItemName: String = "Random Meal"
-        static let randomMealTabItemIconName: String = "arrow.triangle.2.circlepath.circle"
-        static let favoriteMealsTabItemName: String = "Favorite Meals"
-        static let favoriteMealsTabItemIconName: String = "heart"
+        static let homeTabItemName = "Home"
+        static let homeTabItemIconName = "house"
+        static let randomMealTabItemName = "Random Meal"
+        static let randomMealTabItemIconName = "arrow.triangle.2.circlepath.circle"
+        static let favoriteMealsTabItemName = "Favorite Meals"
+        static let favoriteMealsTabItemIconName = "heart"
     }
 }
