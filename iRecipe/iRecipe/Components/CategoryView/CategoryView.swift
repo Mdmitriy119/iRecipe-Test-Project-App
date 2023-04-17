@@ -34,7 +34,7 @@ struct CategoryView: View {
                 }
                 .frame(width: 40, height: 40)
                 .aspectRatio(1.6, contentMode: .fit)
-                .clipShape(RoundedRectangle(cornerRadius: 18))
+                .clipShape(RoundedRectangle(cornerRadius: 16))
             }
             .padding()
             .background(

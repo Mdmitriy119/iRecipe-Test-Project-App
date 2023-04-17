@@ -28,7 +28,7 @@ struct MealView: View {
                     }
                 }
                 .aspectRatio(1, contentMode: .fit)
-                .clipShape(RoundedRectangle(cornerRadius: 18))
+                .clipShape(RoundedRectangle(cornerRadius: 16))
                 .overlay(alignment: .bottomLeading, content: {
                     Text(meal.name)
                         .padding([.leading,. bottom])
@@ -41,7 +41,7 @@ struct MealView: View {
                     } label: {
                         Image(systemName: meal.isFavorite ? "heart.fill" : "heart")
                             .font(.title2)
-                            .foregroundColor(.white)
+                            .foregroundColor(meal.isFavorite ? .pink : .white)
                             .padding([.top, .trailing])
                     }
                 })

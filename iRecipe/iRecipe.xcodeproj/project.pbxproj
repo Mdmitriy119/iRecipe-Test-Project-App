@@ -29,6 +29,9 @@
 		7214301329EACECE00D6F849 /* UseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7214301229EACECE00D6F849 /* UseCase.swift */; };
 		7214301529EAD91600D6F849 /* String+CapitalizedFirst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7214301429EAD91600D6F849 /* String+CapitalizedFirst.swift */; };
 		7258A11B29ED390B006DAE20 /* CachedAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258A11A29ED390B006DAE20 /* CachedAsyncImage.swift */; };
+		7258A12129ED4F42006DAE20 /* YoutubeVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258A12029ED4F42006DAE20 /* YoutubeVideoView.swift */; };
+		7258A12629ED685D006DAE20 /* Mocks+Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258A12529ED685D006DAE20 /* Mocks+Meal.swift */; };
+		7258A12829ED68A7006DAE20 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258A12729ED68A7006DAE20 /* Mocks.swift */; };
 		728A695129EB18880035AEB9 /* GetFavoriteMealByIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728A695029EB18880035AEB9 /* GetFavoriteMealByIdUseCase.swift */; };
 		728A695429EB2F930035AEB9 /* RandomRecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728A695329EB2F930035AEB9 /* RandomRecipeViewModel.swift */; };
 		728A695629EB31690035AEB9 /* GetRandomMealUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728A695529EB31690035AEB9 /* GetRandomMealUseCase.swift */; };
@@ -65,6 +68,9 @@
 		7214301229EACECE00D6F849 /* UseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCase.swift; sourceTree = "<group>"; };
 		7214301429EAD91600D6F849 /* String+CapitalizedFirst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+CapitalizedFirst.swift"; sourceTree = "<group>"; };
 		7258A11A29ED390B006DAE20 /* CachedAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedAsyncImage.swift; sourceTree = "<group>"; };
+		7258A12029ED4F42006DAE20 /* YoutubeVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeVideoView.swift; sourceTree = "<group>"; };
+		7258A12529ED685D006DAE20 /* Mocks+Meal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Mocks+Meal.swift"; sourceTree = "<group>"; };
+		7258A12729ED68A7006DAE20 /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
 		728A695029EB18880035AEB9 /* GetFavoriteMealByIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFavoriteMealByIdUseCase.swift; sourceTree = "<group>"; };
 		728A695329EB2F930035AEB9 /* RandomRecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomRecipeViewModel.swift; sourceTree = "<group>"; };
 		728A695529EB31690035AEB9 /* GetRandomMealUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRandomMealUseCase.swift; sourceTree = "<group>"; };
@@ -174,6 +180,7 @@
 		72142FDF29EA9AC900D6F849 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				7258A11F29ED4F35006DAE20 /* YoutubeVideoView */,
 				7258A11929ED38F3006DAE20 /* CachedAsyncImage */,
 				72FBD06029EAF0F0002C1DF1 /* SearchTextField */,
 				72FBD05D29EAED78002C1DF1 /* CategoryView */,
@@ -245,6 +252,23 @@
 			path = CachedAsyncImage;
 			sourceTree = "<group>";
 		};
+		7258A11F29ED4F35006DAE20 /* YoutubeVideoView */ = {
+			isa = PBXGroup;
+			children = (
+				7258A12029ED4F42006DAE20 /* YoutubeVideoView.swift */,
+			);
+			path = YoutubeVideoView;
+			sourceTree = "<group>";
+		};
+		7258A12429ED6854006DAE20 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				7258A12729ED68A7006DAE20 /* Mocks.swift */,
+				7258A12529ED685D006DAE20 /* Mocks+Meal.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		728A694F29EB186B0035AEB9 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
@@ -297,6 +321,7 @@
 		72FBD06329EB0CD4002C1DF1 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				7258A12429ED6854006DAE20 /* Mocks */,
 				72FBD06529EB0CE7002C1DF1 /* PropertyWrappers */,
 				72FBD06429EB0CDE002C1DF1 /* Protocols */,
 			);
@@ -401,6 +426,7 @@
 				72142FF929EAAE2600D6F849 /* Meal+Category.swift in Sources */,
 				72FBD06729EB0CF7002C1DF1 /* Storage.swift in Sources */,
 				728A695429EB2F930035AEB9 /* RandomRecipeViewModel.swift in Sources */,
+				7258A12829ED68A7006DAE20 /* Mocks.swift in Sources */,
 				7214300829EAB73500D6F849 /* LoadingState.swift in Sources */,
 				72FBD06A29EB13C8002C1DF1 /* FavoriteRecipesViewModel.swift in Sources */,
 				72C8756B29EBDF0C0072B7E7 /* RecipeDetailsViewModel.swift in Sources */,
@@ -419,6 +445,7 @@
 				728A695129EB18880035AEB9 /* GetFavoriteMealByIdUseCase.swift in Sources */,
 				72142FF529EAA98E00D6F849 /* Meal.swift in Sources */,
 				72142FD429EA984700D6F849 /* Home.swift in Sources */,
+				7258A12629ED685D006DAE20 /* Mocks+Meal.swift in Sources */,
 				7214301529EAD91600D6F849 /* String+CapitalizedFirst.swift in Sources */,
 				72FBD05F29EAEDC0002C1DF1 /* CategoryView.swift in Sources */,
 				7214300E29EACE6500D6F849 /* GetSearchedMealsUseCase.swift in Sources */,
@@ -426,6 +453,7 @@
 				72142FD629EA984C00D6F849 /* RandomRecipe.swift in Sources */,
 				72142FC229EA971100D6F849 /* iRecipeApp.swift in Sources */,
 				728A695629EB31690035AEB9 /* GetRandomMealUseCase.swift in Sources */,
+				7258A12129ED4F42006DAE20 /* YoutubeVideoView.swift in Sources */,
 				7214301329EACECE00D6F849 /* UseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

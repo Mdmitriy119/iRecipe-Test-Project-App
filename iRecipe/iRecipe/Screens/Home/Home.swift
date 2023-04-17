@@ -41,7 +41,7 @@ private extension Home {
             }
             SearchTextField(searchText: $viewModel.searchText)
         }
-        .padding(.horizontal, 20)
+        .padding([.leading, .trailing, .bottom])
     }
 }
 
@@ -50,9 +50,9 @@ private extension Home {
     @ViewBuilder
     var content: some View {
         searchedMealsView
-            .padding()
+            .padding([.leading, .trailing, .bottom])
         allMealsCategoriesView
-            .padding()
+            .padding([.leading, .trailing, .bottom])
         mealsForSelectedCategoryView
             .padding([.leading, .trailing, .bottom])
     }
