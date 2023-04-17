@@ -113,11 +113,16 @@ private extension Home {
                 LazyVGrid(columns: columns) {
                     ForEach(meals) { meal in
                         NavigationLink(
-                            destination: RecipeDetails(viewModel: RecipeDetailsViewModel(meal: meal))) {
-                                MealView(meal: meal) { mealId in
-                                    viewModel.setFavorite(mealId: mealId)
-                                }
+                            destination: RecipeDetails(
+                                viewModel: RecipeDetailsViewModel(
+                                    meal: meal,
+                                    shouldFetchMealDetails: true)
+                            )
+                        ) {
+                            MealView(meal: meal) { mealId in
+                                viewModel.setFavorite(mealId: mealId)
                             }
+                        }
                     }
                 }
             default:

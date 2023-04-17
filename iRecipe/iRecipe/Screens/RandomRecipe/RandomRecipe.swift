@@ -27,8 +27,8 @@ struct RandomRecipe: View {
                     .frame(width: geometry.size.width)
                     .frame(minHeight: geometry.size.height)
                 }
-                .navigationTitle("Random Recipe")
             }
+            .navigationTitle("Random Recipe")
         }
     }
 }

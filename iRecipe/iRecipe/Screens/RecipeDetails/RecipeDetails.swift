@@ -16,30 +16,31 @@ struct RecipeDetails: View {
     
     var body: some View {
         ScrollView(showsIndicators: false) {
-            mealCardView
-            mealInstructions
+            switch viewModel.meal {
+                case .initial, .loading:
+                    ProgressView()
+                case .loaded(let meal):
+                    MealView(meal: meal) { mealId in
+                        print("Here: \(mealId)")
+                    }
+                    if let instructions = meal.instructions {
+                        Text(instructions)
+                            .font(.body)
+                            .padding()
+                    }
+                case .error(let error):
+                    Text("Error fetching meal details: \(error.localizedDescription)")
+                        .font(.title2)
+            }
         }
-        .edgesIgnoringSafeArea(.top)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle(viewModel.mealName)
     }
 }
 
 // MARK: - Sub-components
 private extension RecipeDetails {
-    @ViewBuilder
-    private var mealCardView: some View {
-        MealView(meal: viewModel.meal) { mealId in
-            print("Here: \(mealId)")
-        }
-    }
     
-    @ViewBuilder
-    private var mealInstructions: some View {
-        if let instructions = viewModel.meal.instructions {
-            Text(instructions)
-                .font(.title3)
-                .padding()
-        }
-    }
 }
 
 struct StickyHeader<Content: View>: View {
