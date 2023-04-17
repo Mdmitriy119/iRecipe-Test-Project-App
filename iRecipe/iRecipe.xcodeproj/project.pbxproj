@@ -35,6 +35,8 @@
 		728A695129EB18880035AEB9 /* GetFavoriteMealByIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728A695029EB18880035AEB9 /* GetFavoriteMealByIdUseCase.swift */; };
 		728A695429EB2F930035AEB9 /* RandomRecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728A695329EB2F930035AEB9 /* RandomRecipeViewModel.swift */; };
 		728A695629EB31690035AEB9 /* GetRandomMealUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728A695529EB31690035AEB9 /* GetRandomMealUseCase.swift */; };
+		72AD761829EDB54E00729178 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AD761729EDB54E00729178 /* Constants.swift */; };
+		72AD761A29EDB55F00729178 /* Constants+MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AD761929EDB55F00729178 /* Constants+MainView.swift */; };
 		72C8756929EBDF020072B7E7 /* RecipeDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C8756829EBDF020072B7E7 /* RecipeDetails.swift */; };
 		72C8756B29EBDF0C0072B7E7 /* RecipeDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C8756A29EBDF0C0072B7E7 /* RecipeDetailsViewModel.swift */; };
 		72FBD05929EAE42C002C1DF1 /* MealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FBD05829EAE42C002C1DF1 /* MealView.swift */; };
@@ -74,6 +76,8 @@
 		728A695029EB18880035AEB9 /* GetFavoriteMealByIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFavoriteMealByIdUseCase.swift; sourceTree = "<group>"; };
 		728A695329EB2F930035AEB9 /* RandomRecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomRecipeViewModel.swift; sourceTree = "<group>"; };
 		728A695529EB31690035AEB9 /* GetRandomMealUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRandomMealUseCase.swift; sourceTree = "<group>"; };
+		72AD761729EDB54E00729178 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		72AD761929EDB55F00729178 /* Constants+MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+MainView.swift"; sourceTree = "<group>"; };
 		72C8756829EBDF020072B7E7 /* RecipeDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetails.swift; sourceTree = "<group>"; };
 		72C8756A29EBDF0C0072B7E7 /* RecipeDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailsViewModel.swift; sourceTree = "<group>"; };
 		72FBD05829EAE42C002C1DF1 /* MealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealView.swift; sourceTree = "<group>"; };
@@ -285,6 +289,15 @@
 			path = UseCases;
 			sourceTree = "<group>";
 		};
+		72AD761429EDB4F800729178 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				72AD761729EDB54E00729178 /* Constants.swift */,
+				72AD761929EDB55F00729178 /* Constants+MainView.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
 		72C8756729EBDEE20072B7E7 /* RecipeDetails */ = {
 			isa = PBXGroup;
 			children = (
@@ -321,6 +334,7 @@
 		72FBD06329EB0CD4002C1DF1 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				72AD761429EDB4F800729178 /* Constants */,
 				7258A12429ED6854006DAE20 /* Mocks */,
 				72FBD06529EB0CE7002C1DF1 /* PropertyWrappers */,
 				72FBD06429EB0CDE002C1DF1 /* Protocols */,
@@ -446,6 +460,7 @@
 				72142FF529EAA98E00D6F849 /* Meal.swift in Sources */,
 				72142FD429EA984700D6F849 /* Home.swift in Sources */,
 				7258A12629ED685D006DAE20 /* Mocks+Meal.swift in Sources */,
+				72AD761829EDB54E00729178 /* Constants.swift in Sources */,
 				7214301529EAD91600D6F849 /* String+CapitalizedFirst.swift in Sources */,
 				72FBD05F29EAEDC0002C1DF1 /* CategoryView.swift in Sources */,
 				7214300E29EACE6500D6F849 /* GetSearchedMealsUseCase.swift in Sources */,
@@ -453,6 +468,7 @@
 				72142FD629EA984C00D6F849 /* RandomRecipe.swift in Sources */,
 				72142FC229EA971100D6F849 /* iRecipeApp.swift in Sources */,
 				728A695629EB31690035AEB9 /* GetRandomMealUseCase.swift in Sources */,
+				72AD761A29EDB55F00729178 /* Constants+MainView.swift in Sources */,
 				7258A12129ED4F42006DAE20 /* YoutubeVideoView.swift in Sources */,
 				7214301329EACECE00D6F849 /* UseCase.swift in Sources */,
 			);

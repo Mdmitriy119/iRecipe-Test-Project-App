@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct MainView: View {
-    // MARK: - Private properties
     @State private var selectedTab = 0
     @ObservedObject private var homeViewModel: HomeViewModel
     @ObservedObject private var randomRecipeViewModel: RandomRecipeViewModel
@@ -32,22 +31,26 @@ struct MainView: View {
                     // Re-fetch another meal
                     randomRecipeViewModel.reconnect()
                 }
-            })
+            }
+        )
         
         TabView(selection: tabViewSelectionBinding) {
             Home(viewModel: homeViewModel)
                 .tabItem {
-                    Label("Home", systemImage: "house")
+                    Label(Constants.MainView.homeTabItemName,
+                          systemImage: Constants.MainView.homeTabItemIconName)
                 }
                 .tag(0)
             RandomRecipe(viewModel: randomRecipeViewModel)
                 .tabItem {
-                    Label("Random Recipe", systemImage: "arrow.triangle.2.circlepath.circle")
+                    Label(Constants.MainView.randomMealTabItemName,
+                          systemImage: Constants.MainView.randomMealTabItemIconName)
                 }
                 .tag(1)
             FavoriteRecipes(viewModel: favoriteRecipesViewModel)
                 .tabItem {
-                    Label("Favorite Recipes", systemImage: "heart")
+                    Label(Constants.MainView.favoriteMealsTabItemName,
+                          systemImage: Constants.MainView.favoriteMealsTabItemIconName)
                 }
                 .tag(2)
         }
