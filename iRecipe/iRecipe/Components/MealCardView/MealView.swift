@@ -8,12 +8,10 @@
 import SwiftUI
 
 struct MealCardView: View {
-    private var meal: Meal
-    private let onFavoriteButtonTapped: (_ mealId: String) -> ()
+    @Binding private var meal: Meal
     
-    init(meal: Meal, onFavoriteButtonTapped: @escaping (_ mealId: String) -> (Void)) {
-        self.meal = meal
-        self.onFavoriteButtonTapped = onFavoriteButtonTapped
+    init(meal: Binding<Meal>) {
+        self._meal = meal
     }
     
     var body: some View {
@@ -38,7 +36,8 @@ struct MealCardView: View {
                 })
                 .overlay(alignment: .topTrailing, content: {
                     Button {
-                        onFavoriteButtonTapped(meal.id)
+                        PreferenceService.Meals.setFavorite(mealId: meal.id)
+                        meal.isFavorite.toggle()
                     } label: {
                         Image(systemName: meal.isFavorite ? "\(Constants.MealView.favoriteIcoName).fill" : Constants.MealView.favoriteIcoName)
                             .font(.title2)

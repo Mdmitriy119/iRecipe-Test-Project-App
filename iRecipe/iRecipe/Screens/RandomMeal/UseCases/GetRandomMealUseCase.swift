@@ -25,7 +25,7 @@ struct GetRandoMealUseCase: UseCase {
                     as: [String: [Meal]].self)
             if let meals = mealsDictionary[Constants.UseCases.mealsKey],
                let meal = meals.first {
-                return meal
+                return PreferenceService.Meals.markMealAsFavoriteIfNeeded(meal: meal)
             } else {
                 throw NetworkError.dataSerializationFailed
             }

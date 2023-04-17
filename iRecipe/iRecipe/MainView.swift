@@ -10,15 +10,15 @@ import SwiftUI
 struct MainView: View {
     @State private var selectedTab = 0
     @ObservedObject private var homeViewModel: HomeViewModel
-    @ObservedObject private var randomRecipeViewModel: RandomMealViewModel
-    @ObservedObject private var favoriteRecipesViewModel: FavoriteMealsViewModel
+    @ObservedObject private var randomMealViewModel: RandomMealViewModel
+    @ObservedObject private var favoriteMealsViewModel: FavoriteMealsViewModel
     
     init(homeViewModel: HomeViewModel,
-         randomRecipeViewModel: RandomMealViewModel,
-         favoriteRecipesViewModel: FavoriteMealsViewModel) {
+         randomMealViewModel: RandomMealViewModel,
+         favoriteMealsViewModel: FavoriteMealsViewModel) {
         self.homeViewModel = homeViewModel
-        self.randomRecipeViewModel = randomRecipeViewModel
-        self.favoriteRecipesViewModel = favoriteRecipesViewModel
+        self.randomMealViewModel = randomMealViewModel
+        self.favoriteMealsViewModel = favoriteMealsViewModel
     }
     
     
@@ -29,7 +29,7 @@ struct MainView: View {
                 self.selectedTab = $0
                 if selectedTab == 1 {
                     // Re-fetch another meal
-                    randomRecipeViewModel.reconnect()
+                    randomMealViewModel.reconnect()
                 }
             }
         )
@@ -41,13 +41,13 @@ struct MainView: View {
                           systemImage: Constants.MainView.homeTabItemIconName)
                 }
                 .tag(0)
-            RandomMeal(viewModel: randomRecipeViewModel)
+            RandomMeal(viewModel: randomMealViewModel)
                 .tabItem {
                     Label(Constants.MainView.randomMealTabItemName,
                           systemImage: Constants.MainView.randomMealTabItemIconName)
                 }
                 .tag(1)
-            FavoriteMeals(viewModel: favoriteRecipesViewModel)
+            FavoriteMeals(viewModel: favoriteMealsViewModel)
                 .tabItem {
                     Label(Constants.MainView.favoriteMealsTabItemName,
                           systemImage: Constants.MainView.favoriteMealsTabItemIconName)
@@ -61,7 +61,7 @@ struct MainView: View {
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         MainView(homeViewModel: HomeViewModel(),
-                 randomRecipeViewModel: RandomMealViewModel(),
-                 favoriteRecipesViewModel: FavoriteMealsViewModel())
+                 randomMealViewModel: RandomMealViewModel(),
+                 favoriteMealsViewModel: FavoriteMealsViewModel())
     }
 }

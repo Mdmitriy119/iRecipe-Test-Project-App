@@ -33,22 +33,19 @@ struct FavoriteMeals: View {
 private extension FavoriteMeals {
     @ViewBuilder
     var content: some View {
-        switch viewModel.favoriteMeals {
-            case .initial, .loading:
-                ProgressView()
-            case .loaded(let meals):
-                LazyVGrid(columns: Constants.General.vGridColumns) {
-                    ForEach(meals) { meal in
-                        NavigationLink(
-                            destination: MealDetails(viewModel: MealDetailsViewModel(meal: meal))) {
-                                MealCardView(meal: meal) { mealId in
-                                    viewModel.removeFavorite(mealId: mealId)
-                                }
-                            }
+        if viewModel.isFavoriteMealsLoading {
+            ProgressView()
+        } else if let error = viewModel.errorWhileFetchingFavoriteMeals {
+            Text("\(Constants.FavoriteMeals.errorMessage) \(error.localizedDescription)")
+                .font(.title2)
+        } else {
+            LazyVGrid(columns: Constants.General.vGridColumns) {
+                ForEach($viewModel.favoriteMeals) { $meal in
+                    NavigationLink(destination: MealDetails(viewModel: MealDetailsViewModel(meal: $meal))) {
+                        MealCardView(meal: $meal)
                     }
                 }
-            default:
-                EmptyView()
+            }
         }
     }
 }

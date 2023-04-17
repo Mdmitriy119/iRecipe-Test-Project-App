@@ -8,18 +8,20 @@
 import Foundation
 
 @MainActor protocol RandomMealViewModelServicing: ObservableObject {
-    var meal: LoadingState<Meal> { get }
+    var isMealLoading: Bool { get }
+    var meal: Meal? { get }
+    var errorWhileFetchingMeal: Error? { get }
     
     func reconnect()
-    func setFavorite(mealId: String)
 }
 
 @MainActor final class RandomMealViewModel: RandomMealViewModelServicing {
     // MARK: - Public properties
-    @Published var meal: LoadingState<Meal>
+    @Published var isMealLoading: Bool = false
+    @Published var meal: Meal?
+    @Published var errorWhileFetchingMeal: Error?
     
     init() {
-        meal = .initial
         connect()
     }
 }
@@ -28,20 +30,6 @@ import Foundation
 extension RandomMealViewModel {
     func reconnect() {
         connect()
-    }
-    
-    func setFavorite(mealId: String) {
-        PreferenceService.Meals.setFavorite(mealId: mealId)
-        
-        if case .loaded(var meal) = meal {
-            meal.isFavorite = false
-            self.meal = .loaded(meal)
-        } else {
-            if case .loaded(var meal) = meal {
-                meal.isFavorite = true
-                self.meal = .loaded(meal)
-            }
-        }
     }
 }
 
@@ -52,14 +40,15 @@ private extension RandomMealViewModel {
     }
     
     func fetchRandomMeal() {
-        meal = .loading
+        isMealLoading = true
         Task {
             do {
-                var meal = try await GetRandoMealUseCase().execute()
-                meal.isFavorite = PreferenceService.Meals.favoriteIds.contains(meal.id)
-                self.meal = .loaded(meal)
+                let meal = try await GetRandoMealUseCase().execute()
+                self.meal = meal
+                isMealLoading = false
             } catch {
-                meal = .error(error)
+                errorWhileFetchingMeal = error
+                isMealLoading = false
             }
         }
     }

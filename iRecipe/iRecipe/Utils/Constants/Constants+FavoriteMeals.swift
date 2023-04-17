@@ -9,6 +9,7 @@ import Foundation
 
 extension Constants {
     enum FavoriteMeals {
-        static let navigationTitle = "Favorite Recipes"
+        static let navigationTitle = "Favorite Meals"
+        static let errorMessage = "Error fetching favorite meals:"
     }
 }

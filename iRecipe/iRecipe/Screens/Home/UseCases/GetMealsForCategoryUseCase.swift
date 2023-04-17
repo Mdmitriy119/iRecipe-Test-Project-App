@@ -26,7 +26,7 @@ struct GetMealsForCategoryUseCase: UseCase {
                     from: "\(Constants.UseCases.mealsForCategoryEndpoint)\(category.name.rawValue)",
                     as: [String: [Meal]].self) // ["meals": []] -> Bad data format from API :/
             if let meals = mealsDictionary[Constants.UseCases.mealsKey] {
-                return meals
+                return PreferenceService.Meals.markMealsAsFavoriteIfNeeded(meals: meals)
             } else {
                 throw NetworkError.dataSerializationFailed
             }

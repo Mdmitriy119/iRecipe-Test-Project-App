@@ -10,7 +10,7 @@ import Foundation
 extension Constants {
     enum RandomMeal {
         static let navigationTitle = "Random Meal"
-        static let headerTitle = "Tap one more time on tab bar button to see another recipe!"
+        static let headerTitle = "Tap one more time on tab bar button to see another meal!"
         static let errorMessage = "Error fetching random meal:"
     }
 }

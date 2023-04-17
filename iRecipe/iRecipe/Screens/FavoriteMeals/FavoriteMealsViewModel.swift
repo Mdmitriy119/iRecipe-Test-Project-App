@@ -8,18 +8,21 @@
 import Foundation
 
 @MainActor protocol FavoriteMealsViewModelServicing: ObservableObject {
-    var favoriteMeals: LoadingState<[Meal]> { get }
+    var isFavoriteMealsLoading: Bool { get }
+    var favoriteMeals: [Meal] { get }
+    var errorWhileFetchingFavoriteMeals: Error? { get }
     
     func connect()
-    func removeFavorite(mealId: String)
 }
 
 @MainActor final class FavoriteMealsViewModel: FavoriteMealsViewModelServicing {
     // MARK: - Public properties
-    @Published var favoriteMeals: LoadingState<[Meal]>
+    @Published var isFavoriteMealsLoading: Bool = false
+    @Published var favoriteMeals: [Meal]
+    @Published var errorWhileFetchingFavoriteMeals: Error?
     
     init() {
-        favoriteMeals = .initial
+        favoriteMeals = []
     }
 }
 
@@ -28,32 +31,25 @@ extension FavoriteMealsViewModel {
     func connect() {
         fetchFavoriteMeals()
     }
-    
-    func removeFavorite(mealId: String) {
-        PreferenceService.Meals.setFavorite(mealId: mealId)
-        if case .loaded(var meals) = favoriteMeals {
-            meals.removeAll(where: { $0.id == mealId } )
-            favoriteMeals = .loaded(meals)
-        }
-    }
 }
 
 // MARK: - Private methods
 private extension FavoriteMealsViewModel {
     func fetchFavoriteMeals() {
-        favoriteMeals = .loading
+        isFavoriteMealsLoading = true
         Task {
             do {
                 let meals = try await withThrowingTaskGroup(of: Meal.self) { taskGroup in
                     PreferenceService.Meals.favoriteIds.forEach { id in
-                        taskGroup.addTask { try await GetFavoriteMealByIdUseCase(mealId: id).execute() }
+                        taskGroup.addTask { try await GetMealByIdUseCase(mealId: id).execute() }
                     }
                     return try await taskGroup.reduce(into: [Meal]()) { $0.append($1) }
                 }
-                let sortedMeals = meals.sorted(by: { $0.id < $1.id })
-                favoriteMeals = .loaded(sortedMeals)
+                self.favoriteMeals = meals.sorted(by: { $0.id < $1.id })
+                isFavoriteMealsLoading = false
             } catch {
-                favoriteMeals = .error(error)
+                errorWhileFetchingFavoriteMeals = error
+                isFavoriteMealsLoading = false
             }
         }
     }

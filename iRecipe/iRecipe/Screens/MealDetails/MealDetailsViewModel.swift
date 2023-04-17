@@ -6,45 +6,41 @@
 //
 
 import Foundation
+import SwiftUI
 
 @MainActor protocol MealDetailsViewModelServicing: ObservableObject {
-    /// Needed for nav bar title
-    var mealName: String { get }
-    var meal: LoadingState<Meal> { get }
-    
-    func setFavorite(mealId: String)
+    var isMealLoading: Bool { get }
+    var meal: Meal { get }
+    var errorWhileFetchingMeal: Error? { get }
+
+    func connect()
     func getFormattedIngredientsWithMeasures() -> [String: String]
 }
 
 @MainActor final class MealDetailsViewModel: MealDetailsViewModelServicing {
-    // MARK: - Public properties
-    let mealName: String
-    @Published var meal: LoadingState<Meal>
+    // MARK: - Private properties
+    private let shouldFetchMealDetails: Bool
     
-    init(meal: Meal, shouldFetchMealDetails: Bool = false) {
-        self.mealName = meal.name
-        if shouldFetchMealDetails {
-            self.meal = .initial
-            connect(with: meal.id)
-        } else {
-            self.meal = .loaded(meal)
-        }
+    // MARK: - Public properties
+    @Published var isMealLoading: Bool = false
+    @Binding var meal: Meal
+    @Published var errorWhileFetchingMeal: Error?
+    
+    init(meal: Binding<Meal>, shouldFetchMealDetails: Bool = false) {
+        self._meal = meal
+        self.shouldFetchMealDetails = shouldFetchMealDetails
     }
 }
 
 // MARK: - Public methods
 extension MealDetailsViewModel {
-    func setFavorite(mealId: String) {
-        PreferenceService.Meals.setFavorite(mealId: mealId)
-
-        if case .loaded(let meal) = meal {
-            let adaptedMeal = markMealAsFavoriteIfNeeded(meal: meal)
-            self.meal = .loaded(adaptedMeal)
+    func connect() {
+        if shouldFetchMealDetails {
+            fetchMealDetails(with: meal.id)
         }
     }
     
     func getFormattedIngredientsWithMeasures() -> [String: String] {
-        guard case .loaded(let meal) = meal  else { return [:] }
         var ingredientsWithMeasures: [String: String] = [:]
         var ingredients: [String] = []
         var measures: [String] = []
@@ -81,25 +77,16 @@ extension MealDetailsViewModel {
 
 // MARK: - Private methods
 private extension MealDetailsViewModel {
-    func connect(with mealId: String) {
-        fetchMealDetails(with: mealId)
-    }
-    
     func fetchMealDetails(with mealId: String) {
+        isMealLoading = true
         Task {
             do {
-                let meal = try await GetFavoriteMealByIdUseCase(mealId: mealId).execute()
-                let adaptedMeal = markMealAsFavoriteIfNeeded(meal: meal)
-                self.meal = .loaded(adaptedMeal)
+                meal = try await GetMealByIdUseCase(mealId: mealId).execute()
+                isMealLoading = false
             } catch {
-                self.meal = .error(error)
+                self.errorWhileFetchingMeal = error
+                isMealLoading = false
             }
         }
-    }
-                
-    func markMealAsFavoriteIfNeeded(meal: Meal) -> Meal {
-        var meal = meal
-        meal.isFavorite = PreferenceService.Meals.favoriteIds.contains(meal.id)
-        return meal
     }
 }

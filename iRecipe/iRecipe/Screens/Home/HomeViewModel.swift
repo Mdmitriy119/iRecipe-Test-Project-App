@@ -10,13 +10,16 @@ import Combine
 
 @MainActor protocol HomeViewModelServicing: ObservableObject {
     var searchText: String { get set }
-    var searchedMeals: LoadingState<[Meal]> { get }
+    var isSearchedMealsLoading: Bool { get }
+    var searchedMeals: [Meal] { get }
+    var errorWhileFetchingSearchedMeals: Error? { get }
     var selectedCategory: Meal.Category? { get set }
     var mealsCategories: LoadingState<[Meal.Category]> { get }
-    var mealsBySelectedCategory: LoadingState<[Meal]> { get }
+    var isMealsForCategoryLoading: Bool { get }
+    var mealsForSelectedCategory: [Meal] { get }
+    var errorWhileFetchingMealForCategory: Error? { get }
     
     func refreshMealsIfNeeded()
-    func setFavorite(mealId: String)
 }
 
 @MainActor final class HomeViewModel: HomeViewModelServicing {
@@ -25,15 +28,19 @@ import Combine
     
     // MARK: - Public properties
     @Published var searchText: String = ""
-    @Published var searchedMeals: LoadingState<[Meal]>
+    @Published var isSearchedMealsLoading: Bool = false
+    @Published var searchedMeals: [Meal]
+    @Published var errorWhileFetchingSearchedMeals: Error?
     @Published var selectedCategory: Meal.Category?
     @Published var mealsCategories: LoadingState<[Meal.Category]>
-    @Published var mealsBySelectedCategory: LoadingState<[Meal]>
+    @Published var isMealsForCategoryLoading: Bool = false
+    @Published var mealsForSelectedCategory: [Meal]
+    @Published var errorWhileFetchingMealForCategory: Error?
     
     init() {
+        searchedMeals = []
         mealsCategories = .initial
-        searchedMeals = .initial
-        mealsBySelectedCategory = .initial
+        mealsForSelectedCategory = []
         connect()
     }
 }
@@ -43,37 +50,10 @@ extension HomeViewModel {
     /// Refresh meals when these were marked fav/no fav from different screens
     func refreshMealsIfNeeded() {
         // Searched meals
-        if case .loaded(var meals) = searchedMeals {
-            let favoriteMealsIds = Set(PreferenceService.Meals.favoriteIds)
-            for index in 0..<meals.count {
-                meals[index].isFavorite = favoriteMealsIds.contains(meals[index].id)
-            }
-            self.searchedMeals = .loaded(meals)
-        }
+        searchedMeals = PreferenceService.Meals.markMealsAsFavoriteIfNeeded(meals: searchedMeals)
         
-        
-        // Meals by category
-        if case .loaded(var meals) = mealsBySelectedCategory {
-            let favoriteMealsIds = Set(PreferenceService.Meals.favoriteIds)
-            for index in 0..<meals.count {
-                meals[index].isFavorite = favoriteMealsIds.contains(meals[index].id)
-            }
-            self.mealsBySelectedCategory = .loaded(meals)
-        }
-    }
-    
-    func setFavorite(mealId: String) {
-        PreferenceService.Meals.setFavorite(mealId: mealId)
-        
-        if case .loaded(let meals) = searchedMeals {
-            let adaptedMeals = markMealsFavoriteIfNeeded(meals: meals)
-            self.searchedMeals = .loaded(adaptedMeals)
-        }
-        
-        if case .loaded(let meals) = mealsBySelectedCategory {
-            let adaptedMeals = markMealsFavoriteIfNeeded(meals: meals)
-            self.mealsBySelectedCategory = .loaded(adaptedMeals)
-        }
+        // Meals for category
+        mealsForSelectedCategory = PreferenceService.Meals.markMealsAsFavoriteIfNeeded(meals: mealsForSelectedCategory)
     }
 }
 
@@ -91,7 +71,7 @@ private extension HomeViewModel {
             .sink { [weak self] searchText in
                 let searchText = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
                 guard searchText.isNotEmpty else {
-                    self?.searchedMeals = .initial
+                    self?.searchedMeals = []
                     return
                 }
                 self?.fetchMeals(for: searchText)
@@ -100,15 +80,15 @@ private extension HomeViewModel {
     }
     
     func fetchMeals(for searchText: String) {
-        self.searchedMeals = .loading
+        self.isSearchedMealsLoading = true
         
         Task {
             do {
-                let meals = try await GetSearchedMealsUseCase(searchText: searchText).execute()
-                let adaptedMeals = markMealsFavoriteIfNeeded(meals: meals)
-                self.searchedMeals = .loaded(adaptedMeals)
+                searchedMeals = try await GetSearchedMealsUseCase(searchText: searchText).execute()
+                isSearchedMealsLoading = false
             } catch {
-                self.searchedMeals = .error(error)
+                errorWhileFetchingSearchedMeals = error
+                isSearchedMealsLoading = false
             }
         }
     }
@@ -123,14 +103,14 @@ private extension HomeViewModel {
     }
     
     func fetchMeals(for category: Meal.Category) {
-        self.mealsBySelectedCategory = .initial
+        self.isMealsForCategoryLoading = true
         Task {
             do {
-                let meals = try await GetMealsForCategoryUseCase(category: category).execute()
-                let adaptedMeals = markMealsFavoriteIfNeeded(meals: meals)
-                self.mealsBySelectedCategory = .loaded(adaptedMeals)
+                mealsForSelectedCategory = try await GetMealsForCategoryUseCase(category: category).execute()
+                isMealsForCategoryLoading = false
             } catch {
-                self.mealsBySelectedCategory = .error(error)
+                errorWhileFetchingMealForCategory = error
+                isMealsForCategoryLoading = false
             }
         }
     }
@@ -146,16 +126,5 @@ private extension HomeViewModel {
                 self.mealsCategories = .error(error)
             }
         }
-    }
-    
-    func markMealsFavoriteIfNeeded(meals: [Meal]) -> [Meal] {
-        var meals = meals
-        let favoriteMealsIds = Set(PreferenceService.Meals.favoriteIds)
-        for index in 0..<meals.count {
-            meals[index].isFavorite = favoriteMealsIds.contains(meals[index].id)
-        }
-        let sortedMeals = meals.sorted(by: { $0.id < $1.id })
-        
-        return sortedMeals
     }
 }

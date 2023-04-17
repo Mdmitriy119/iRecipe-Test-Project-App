@@ -55,30 +55,26 @@ private extension Home {
     
     @ViewBuilder
     var searchedMealsView: some View {
-        switch viewModel.searchedMeals {
-            case .initial:
-                EmptyView()
-            case .loading:
-                ProgressView()
-            case .loaded(let meals):
+        if viewModel.isSearchedMealsLoading {
+            ProgressView()
+        } else if let _ = viewModel.errorWhileFetchingSearchedMeals {
+            if viewModel.searchText.trimmingCharacters(in: .whitespacesAndNewlines).isNotEmpty {
+                HStack {
+                    Text("\(Constants.Home.noSearchedMealsErrorMessage) \(viewModel.searchText)")
+                        .font(.title2)
+                    Spacer()
+                }
+            }
+        } else {
+            if viewModel.searchedMeals.isNotEmpty {
                 LazyVGrid(columns: Constants.General.vGridColumns) {
-                    ForEach(meals) { meal in
-                        NavigationLink(
-                            destination: MealDetails(viewModel: MealDetailsViewModel(meal: meal))) {
-                                MealCardView(meal: meal) { mealId in
-                                    viewModel.setFavorite(mealId: mealId)
-                                }
-                            }
+                    ForEach(0..<viewModel.searchedMeals.count, id: \.self) { index in
+                        NavigationLink(destination: MealDetails(viewModel: MealDetailsViewModel(meal: $viewModel.searchedMeals[index]))) {
+                            MealCardView(meal:  $viewModel.searchedMeals[index])
+                        }
                     }
                 }
-            case .error:
-                if viewModel.searchText.trimmingCharacters(in: .whitespacesAndNewlines).isNotEmpty {
-                    HStack {
-                        Text("\(Constants.Home.noSearchedMealsErrorMessage) \(viewModel.searchText)")
-                            .font(.title2)
-                        Spacer()
-                    }
-                }
+            } 
         }
     }
     
@@ -92,7 +88,7 @@ private extension Home {
                     HStack {
                         ForEach(categories) { category in
                             MealCategoryView(currentCategory: category,
-                                         selectedCategory: $viewModel.selectedCategory)
+                                             selectedCategory: $viewModel.selectedCategory)
                         }
                     }
                 }
@@ -103,25 +99,19 @@ private extension Home {
     
     @ViewBuilder
     var mealsForSelectedCategoryView: some View {
-        switch viewModel.mealsBySelectedCategory {
-            case .initial, .loading:
-                ProgressView()
-            case .loaded(let meals):
-                LazyVGrid(columns: Constants.General.vGridColumns) {
-                    ForEach(meals) { meal in
-                        NavigationLink(
-                            destination: MealDetails(
-                                viewModel: MealDetailsViewModel(
-                                    meal: meal,
-                                    shouldFetchMealDetails: true))) {
-                            MealCardView(meal: meal) { mealId in
-                                viewModel.setFavorite(mealId: mealId)
-                            }
-                        }
+        if viewModel.isMealsForCategoryLoading {
+            ProgressView()
+        } else if let _ = viewModel.errorWhileFetchingMealForCategory {
+            EmptyView()
+        } else {
+            LazyVGrid(columns: Constants.General.vGridColumns) {
+                ForEach(0..<viewModel.mealsForSelectedCategory.count, id: \.self) { index in
+                    NavigationLink(destination: MealDetails(viewModel: MealDetailsViewModel(meal: $viewModel.mealsForSelectedCategory[index],
+                                                                                            shouldFetchMealDetails: true))) {
+                        MealCardView(meal: $viewModel.mealsForSelectedCategory[index])
                     }
                 }
-            default:
-                EmptyView()
+            }
         }
     }
 }

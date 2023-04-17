@@ -17,50 +17,50 @@ struct MealDetails: View {
     
     var body: some View {
         ScrollView(showsIndicators: false) {
-            switch viewModel.meal {
-                case .initial, .loading:
-                    ProgressView()
-                case .loaded(let meal):
-                    MealCardView(meal: meal) { mealId in
-                        viewModel.setFavorite(mealId: mealId)
-                    }
+            if viewModel.isMealLoading {
+                ProgressView()
+            } else if let error = viewModel.errorWhileFetchingMeal {
+                Text("\(Constants.MealDetails.errorMessage) \(error.localizedDescription)")
+                    .font(.title2)
+            } else {
+                MealCardView(meal: $viewModel.meal)
                     .overlay(alignment: .topLeading, content: {
-                        if let area = meal.area {
+                        if let area = viewModel.meal.area {
                             areaOverlayText(with: area)
                         }
                     })
                     .overlay(alignment: .bottomTrailing, content: {
-                        if let category = meal.category {
+                        if let category = viewModel.meal.category {
                             categoryOverlayText(with: category.rawValue)
                         }
                     })
-                    
-                    if let tags = meal.tags {
-                        tagsView(with: tags)
-                    }
-                    
-                    ingredientsAndMeasuresView
-                    
-                    if let instructions = meal.instructions {
-                        instructionsView(with: instructions)
-                    }
-                    
-                    if let youtubeVideoUrlString = meal.youtube,
-                       let youtubeVideoUrl = URL(string: youtubeVideoUrlString
-                        .replacingOccurrences(of: Constants.MealDetails.youtubeUrlTextToReplace,
-                                              with: Constants.MealDetails.youtubeUrlTextReplaceWith)) {
-                        YoutubeVideoView(youtubeVideoUrl: youtubeVideoUrl)
-                            .frame(height: 300)
-                            .cornerRadius(Constants.General.cornerRadius)
-                            .padding([.leading, .trailing, .bottom], Constants.General.padding)
-                    }
-                case .error(let error):
-                    Text("\(Constants.MealDetails.errorMessage) \(error.localizedDescription)")
-                        .font(.title2)
+                
+                if let tags = viewModel.meal.tags {
+                    tagsView(with: tags)
+                }
+                
+                ingredientsAndMeasuresView
+                
+                if let instructions = viewModel.meal.instructions {
+                    instructionsView(with: instructions)
+                }
+                
+                if let youtubeVideoUrlString = viewModel.meal.youtube,
+                   let youtubeVideoUrl = URL(string: youtubeVideoUrlString
+                    .replacingOccurrences(of: Constants.MealDetails.youtubeUrlTextToReplace,
+                                          with: Constants.MealDetails.youtubeUrlTextReplaceWith)) {
+                    YoutubeVideoView(youtubeVideoUrl: youtubeVideoUrl)
+                        .frame(height: 300)
+                        .cornerRadius(Constants.General.cornerRadius)
+                        .padding([.leading, .trailing, .bottom], Constants.General.padding)
+                }
             }
         }
         .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle(viewModel.mealName)
+        .navigationTitle(viewModel.meal.name)
+        .onAppear {
+            viewModel.connect()
+        }
     }
 }
 
@@ -120,8 +120,8 @@ private extension MealDetails {
     }
 }
 
-struct RecipeDetails_Previews: PreviewProvider {
+struct MealDetails_Previews: PreviewProvider {
     static var previews: some View {
-        MealDetails(viewModel: MealDetailsViewModel(meal: Mocks.meal))
+        MealDetails(viewModel: MealDetailsViewModel(meal: .constant(Mocks.meal)))
     }
 }

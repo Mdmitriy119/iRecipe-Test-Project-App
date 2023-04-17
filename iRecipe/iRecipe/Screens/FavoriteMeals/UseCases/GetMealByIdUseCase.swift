@@ -1,5 +1,5 @@
 //
-//  GetFavoriteMealByIdUseCase.swift
+//  GetMealByIdUseCase.swift
 //  iRecipe
 //
 //  Created by Dumitru Manea on 15.04.2023.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GetFavoriteMealByIdUseCase: UseCase {
+struct GetMealByIdUseCase: UseCase {
     typealias Output = Meal
     
     private let mealId: String
@@ -27,9 +27,8 @@ struct GetFavoriteMealByIdUseCase: UseCase {
                     from:"\(Constants.UseCases.mealByIdUseCase)\(mealId)",
                     as: [String: [Meal]].self)
             if let meals = mealsDictionary[Constants.UseCases.mealsKey],
-               var meal = meals.first {
-                meal.isFavorite = true
-                return meal
+               let meal = meals.first {
+                return PreferenceService.Meals.markMealAsFavoriteIfNeeded(meal: meal)
             } else {
                 throw NetworkError.dataSerializationFailed
             }

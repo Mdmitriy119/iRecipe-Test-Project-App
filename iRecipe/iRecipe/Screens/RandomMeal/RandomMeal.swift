@@ -46,19 +46,16 @@ private extension RandomMeal {
     
     @ViewBuilder
     var content: some View {
-        switch viewModel.meal {
-            case .initial, .loading:
-                ProgressView()
-            case .loaded(let meal):
-                NavigationLink(
-                    destination: MealDetails(viewModel: MealDetailsViewModel(meal: meal))) {
-                        MealCardView(meal: meal) { mealId in
-                            viewModel.setFavorite(mealId: mealId)
-                        }
-                    }
-            case .error(let error):
-                Text("\(Constants.RandomMeal.errorMessage) \(error.localizedDescription)")
-                    .font(.title2)
+        if viewModel.isMealLoading {
+            ProgressView()
+        } else if let error = viewModel.errorWhileFetchingMeal {
+            Text("\(Constants.RandomMeal.errorMessage) \(error.localizedDescription)")
+                .font(.title2)
+        } else {
+            // If there is no error and data is no loading, we have meal for sure
+            NavigationLink(destination: MealDetails(viewModel: MealDetailsViewModel(meal: Binding($viewModel.meal)!))) {
+                MealCardView(meal: Binding($viewModel.meal)!)
+            }
         }
     }
 }
